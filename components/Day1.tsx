@@ -478,24 +478,10 @@ const AIAgentsSlide = ({ content }: { content: any }) => {
             <div className="relative flex-grow flex items-center justify-center min-h-[300px]">
               
               {/* SVG Connections Layer */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 1000 1000">
                 <defs>
-                  {/* Gradient for lines - subtle glow */}
-                  <linearGradient id="line-tools" x1="50%" y1="50%" x2="50%" y2="10%">
-                    <stop offset="0%" stopColor="#818cf8" stopOpacity="0.2"/>
-                    <stop offset="100%" stopColor="#6366f1" stopOpacity="0.8"/>
-                  </linearGradient>
-                  <linearGradient id="line-memory" x1="50%" y1="50%" x2="15%" y2="70%">
-                    <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.2"/>
-                    <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.8"/>
-                  </linearGradient>
-                  <linearGradient id="line-action" x1="50%" y1="50%" x2="85%" y2="70%">
-                    <stop offset="0%" stopColor="#34d399" stopOpacity="0.2"/>
-                    <stop offset="100%" stopColor="#10b981" stopOpacity="0.8"/>
-                  </linearGradient>
-                  {/* Glow filter */}
                   <filter id="glow">
-                    <feGaussianBlur stdDeviation="1.5" result="blur"/>
+                    <feGaussianBlur stdDeviation="4" result="blur"/>
                     <feMerge>
                       <feMergeNode in="blur"/>
                       <feMergeNode in="SourceGraphic"/>
@@ -503,55 +489,43 @@ const AIAgentsSlide = ({ content }: { content: any }) => {
                   </filter>
                 </defs>
 
-                {/* Lines from center to components */}
+                {/* Thin dotted lines from center to components */}
                 {visibleComponents.includes('tools') && (
                   <g>
-                    <line x1="50" y1="50" x2="50" y2="10" stroke="url(#line-tools)" strokeWidth="1.5" strokeDasharray="4 2" opacity="0.6"/>
-                    <circle r="2.5" fill="#6366f1" filter="url(#glow)">
-                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L 0,-40" begin="0s"/>
-                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+                    <line x1="500" y1="500" x2="500" y2="100" stroke="#a5b4fc" strokeWidth="1" strokeDasharray="2 10" opacity="0.5" strokeLinecap="round"/>
+                    <circle r="4" fill="#818cf8" filter="url(#glow)">
+                      <animateMotion dur="2.5s" repeatCount="indefinite" path="M 0,0 L 0,-400" begin="0s"/>
+                      <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite"/>
                     </circle>
-                    <circle r="2.5" fill="#6366f1" filter="url(#glow)">
-                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L 0,-40" begin="0.7s"/>
-                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="0.7s"/>
-                    </circle>
-                    <circle r="2.5" fill="#6366f1" filter="url(#glow)">
-                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L 0,-40" begin="1.4s"/>
-                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="1.4s"/>
+                    <circle r="4" fill="#818cf8" filter="url(#glow)">
+                      <animateMotion dur="2.5s" repeatCount="indefinite" path="M 0,0 L 0,-400" begin="1.25s"/>
+                      <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite" begin="1.25s"/>
                     </circle>
                   </g>
                 )}
                 {visibleComponents.includes('memory') && (
                   <g>
-                    <line x1="50" y1="50" x2="15" y2="70" stroke="url(#line-memory)" strokeWidth="1.5" strokeDasharray="4 2" opacity="0.6"/>
-                    <circle r="2.5" fill="#f59e0b" filter="url(#glow)">
-                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L -35,20" begin="0.3s"/>
-                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="0.3s"/>
+                    <line x1="500" y1="500" x2="150" y2="700" stroke="#fcd34d" strokeWidth="1" strokeDasharray="2 10" opacity="0.5" strokeLinecap="round"/>
+                    <circle r="4" fill="#fbbf24" filter="url(#glow)">
+                      <animateMotion dur="2.5s" repeatCount="indefinite" path="M 0,0 L -350,200" begin="0.4s"/>
+                      <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite" begin="0.4s"/>
                     </circle>
-                    <circle r="2.5" fill="#f59e0b" filter="url(#glow)">
-                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L -35,20" begin="1s"/>
-                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="1s"/>
-                    </circle>
-                    <circle r="2.5" fill="#f59e0b" filter="url(#glow)">
-                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L -35,20" begin="1.7s"/>
-                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="1.7s"/>
+                    <circle r="4" fill="#fbbf24" filter="url(#glow)">
+                      <animateMotion dur="2.5s" repeatCount="indefinite" path="M 0,0 L -350,200" begin="1.65s"/>
+                      <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite" begin="1.65s"/>
                     </circle>
                   </g>
                 )}
                 {visibleComponents.includes('action') && (
                   <g>
-                    <line x1="50" y1="50" x2="85" y2="70" stroke="url(#line-action)" strokeWidth="1.5" strokeDasharray="4 2" opacity="0.6"/>
-                    <circle r="2.5" fill="#10b981" filter="url(#glow)">
-                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L 35,20" begin="0.5s"/>
-                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+                    <line x1="500" y1="500" x2="850" y2="700" stroke="#6ee7b7" strokeWidth="1" strokeDasharray="2 10" opacity="0.5" strokeLinecap="round"/>
+                    <circle r="4" fill="#34d399" filter="url(#glow)">
+                      <animateMotion dur="2.5s" repeatCount="indefinite" path="M 0,0 L 350,200" begin="0.8s"/>
+                      <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite" begin="0.8s"/>
                     </circle>
-                    <circle r="2.5" fill="#10b981" filter="url(#glow)">
-                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L 35,20" begin="1.2s"/>
-                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="1.2s"/>
-                    </circle>
-                    <circle r="2.5" fill="#10b981" filter="url(#glow)">
-                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L 35,20" begin="1.9s"/>
-                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="1.9s"/>
+                    <circle r="4" fill="#34d399" filter="url(#glow)">
+                      <animateMotion dur="2.5s" repeatCount="indefinite" path="M 0,0 L 350,200" begin="2.05s"/>
+                      <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite" begin="2.05s"/>
                     </circle>
                   </g>
                 )}
@@ -926,6 +900,21 @@ const Day1: React.FC<Day1Props> = ({ setRoute }) => {
   const handleFinish = () => {
      setShowCTA(true);
   };
+
+  // Keyboard navigation: ArrowLeft/ArrowRight
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        handleNext();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        handlePrev();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [currentIndex]);
 
   const currentSlide = slides[currentIndex];
   const progress = ((currentIndex + 1) / slides.length) * 100;
