@@ -3,7 +3,7 @@ import { AGENT_ANALYSIS_SYSTEM_PROMPT, IA_HEROES_CONTEXT } from "../constants";
 
 // Helper to get client with Environment Key (for text/search/flash-image)
 const getEnvClient = () => {
-  return new GoogleGenAI({ apiKey: process.env.API_KEY });
+  return new GoogleGenAI({ apiKey: import.meta.env.VITE_API_KEY });
 };
 
 // Helper to get client with User Selected Key (for Veo/Pro Models)
@@ -17,10 +17,10 @@ const getUserClient = async () => {
      }
   }
   // The SDK automatically picks up the selected key if we use a new instance in this context
-  // However, for safety in this specific web container environment, we rely on the injected process.env.API_KEY
+  // However, for safety in this specific web container environment, we rely on the injected import.meta.env.VITE_API_KEY
   // for standard calls, but for Veo/Pro we strictly follow the guidance to ensure the user has authorized it.
   
-  return new GoogleGenAI({ apiKey: process.env.API_KEY });
+  return new GoogleGenAI({ apiKey: import.meta.env.VITE_API_KEY });
 };
 
 
@@ -103,7 +103,7 @@ export const generateVideo = async (prompt: string): Promise<string> => {
   if (!videoUri) throw new Error("Video generation failed");
 
   // Fetch with key
-  const response = await fetch(`${videoUri}&key=${process.env.API_KEY}`);
+  const response = await fetch(`${videoUri}&key=${import.meta.env.VITE_API_KEY}`);
   const blob = await response.blob();
   return URL.createObjectURL(blob);
 };
