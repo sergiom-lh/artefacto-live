@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from './Layout';
 import CTAModal from './CTAModal';
 import { AppRoute } from '../types';
 import { COLORS } from '../constants';
 import { enhancePrompt, enhanceAgentPrompt } from '../services/geminiService';
+import { AgentTemplate, WORK_AGENTS, PERSONAL_AGENTS } from './agentMenuData';
 
 interface Day2Props {
   setRoute: (route: AppRoute) => void;
@@ -39,6 +40,103 @@ const CopyButton = ({ text }: { text: string }) => {
   );
 };
 
+const AgentCard = ({ agent, onClick }: { agent: AgentTemplate; onClick: () => void }) => (
+  <button
+    onClick={onClick}
+    className="group bg-white rounded-2xl p-4 border-2 border-slate-100 hover:border-pink-200 hover:shadow-lg transition-all duration-300 text-left flex flex-col gap-2 hover:scale-[1.02] active:scale-[0.98]"
+  >
+    <div className="text-3xl">{agent.icon}</div>
+    <h4 className="font-bold text-slate-800 text-sm leading-tight group-hover:text-pink-600 transition-colors">{agent.name}</h4>
+    <p className="text-xs text-slate-400 leading-snug">{agent.description}</p>
+    <div className="mt-auto pt-2">
+      <span className="text-[10px] font-bold uppercase tracking-widest text-pink-400 group-hover:text-pink-600 transition-colors">Ver prompt &rarr;</span>
+    </div>
+  </button>
+);
+
+const AgentModal = ({ agent, onClose }: { agent: AgentTemplate | null; onClose: () => void }) => {
+  useEffect(() => {
+    if (agent) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = '';
+    return () => { document.body.style.overflow = ''; };
+  }, [agent]);
+
+  if (!agent) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      <div
+        className="relative w-full sm:max-w-2xl max-h-[90vh] flex flex-col bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden"
+        style={{ animation: 'slideUp .3s ease-out' }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex-shrink-0 p-5 pb-4 border-b border-slate-100" style={{ background: `linear-gradient(135deg, ${COLORS.primary}08, ${COLORS.accent}08)` }}>
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="text-4xl bg-white rounded-2xl p-3 shadow-sm border border-slate-100">{agent.icon}</div>
+              <div>
+                <h3 className="font-bold text-lg text-slate-800">{agent.name}</h3>
+                <p className="text-sm text-slate-500">{agent.description}</p>
+              </div>
+            </div>
+            <button onClick={onClose} className="p-2 rounded-xl hover:bg-slate-100 transition-colors text-slate-400 hover:text-slate-600 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+          </div>
+        </div>
+        <div className="flex-1 overflow-y-auto p-5">
+          <div className="bg-[#0F172A] rounded-2xl overflow-hidden border border-slate-700">
+            <div className="flex items-center justify-between px-4 py-3 bg-[#1e293b] border-b border-slate-700">
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
+                <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
+                <span className="ml-2 text-[10px] font-mono text-slate-400 uppercase tracking-widest">System Prompt</span>
+              </div>
+              <CopyButton text={agent.systemPrompt} />
+            </div>
+            <div className="p-5 overflow-x-auto">
+              <pre className="font-mono text-sm leading-relaxed whitespace-pre-wrap text-slate-200">{agent.systemPrompt}</pre>
+            </div>
+          </div>
+        </div>
+        <div className="flex-shrink-0 px-5 py-3 bg-amber-50 border-t border-amber-100">
+          <p className="text-xs text-amber-700 text-center">
+            <strong>Tip:</strong> Copia este prompt y p&eacute;galo como instrucciones del sistema en ChatGPT, Gemini o Claude para crear tu propio agente.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const AgentMenuSection = ({ title, subtitle, icon, agents, color, onSelectAgent }: {
+  title: string; subtitle: string; icon: string; agents: AgentTemplate[]; color: 'blue' | 'violet'; onSelectAgent: (a: AgentTemplate) => void;
+}) => {
+  const c = color === 'blue'
+    ? { bg: 'bg-gradient-to-br from-blue-50 to-cyan-50', border: 'border-blue-100', title: 'text-blue-900', sub: 'text-blue-600', badge: 'bg-blue-100 text-blue-700' }
+    : { bg: 'bg-gradient-to-br from-violet-50 to-fuchsia-50', border: 'border-violet-100', title: 'text-violet-900', sub: 'text-violet-600', badge: 'bg-violet-100 text-violet-700' };
+
+  return (
+    <div className={`${c.bg} border ${c.border} rounded-2xl p-5 md:p-6 space-y-5`}>
+      <div className="flex items-center gap-3">
+        <span className="text-3xl">{icon}</span>
+        <div>
+          <h3 className={`font-bold text-lg ${c.title}`}>{title}</h3>
+          <p className={`text-sm ${c.sub}`}>{subtitle}</p>
+        </div>
+        <span className={`ml-auto ${c.badge} text-xs font-bold px-3 py-1 rounded-full`}>{agents.length} agentes</span>
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        {agents.map((agent) => (
+          <AgentCard key={agent.id} agent={agent} onClick={() => onSelectAgent(agent)} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const Day2: React.FC<Day2Props> = ({ setRoute }) => {
   const [mode, setMode] = useState<'image' | 'video' | 'agent'>('image');
   const [prompt, setPrompt] = useState('');
@@ -46,6 +144,7 @@ const Day2: React.FC<Day2Props> = ({ setRoute }) => {
   const [isOptimized, setIsOptimized] = useState(false);
   const [showCTA, setShowCTA] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedAgent, setSelectedAgent] = useState<AgentTemplate | null>(null);
 
   // Agent template fields
   const [agentRol, setAgentRol] = useState('');
@@ -127,6 +226,7 @@ const Day2: React.FC<Day2Props> = ({ setRoute }) => {
         title="¡Prompt mejorado!"
         message="Crear buenos prompts es una habilidad clave. En IA Heroes Pro aprenderás técnicas avanzadas de prompt engineering para imagen, video y agentes."
       />
+      <AgentModal agent={selectedAgent} onClose={() => setSelectedAgent(null)} />
 
       <div className="space-y-6 pb-10">
 
@@ -325,6 +425,24 @@ const Day2: React.FC<Day2Props> = ({ setRoute }) => {
                 </div>
               </div>
             )}
+
+            {/* Divider */}
+            <div className="flex items-center gap-4 pt-4">
+              <div className="flex-1 h-px bg-slate-200" />
+              <span className="text-sm font-bold text-slate-400 uppercase tracking-widest">Men&uacute; de Agentes Listos</span>
+              <div className="flex-1 h-px bg-slate-200" />
+            </div>
+            <p className="text-center text-sm text-slate-500 -mt-3">
+              Haz clic en cualquier agente para ver su System Prompt y copiarlo directamente.
+            </p>
+
+            {/* Work Agents */}
+            <AgentMenuSection title="Agentes para mi Trabajo" subtitle="15 agentes listos para potenciar tu productividad profesional"
+              icon="💼" agents={WORK_AGENTS} color="blue" onSelectAgent={setSelectedAgent} />
+
+            {/* Personal Agents */}
+            <AgentMenuSection title="Agentes para mi Vida Personal" subtitle="15 agentes para simplificar y mejorar tu día a día"
+              icon="🏡" agents={PERSONAL_AGENTS} color="violet" onSelectAgent={setSelectedAgent} />
           </div>
         )}
       </div>
