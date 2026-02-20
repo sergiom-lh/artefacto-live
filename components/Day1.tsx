@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import {
   LineChart,
@@ -214,6 +214,13 @@ const AgentExamplesSlide = ({ content }: { content: any }) => {
   // Get current active step details
   const activeStep = example.steps[currentStep];
 
+  // Determine if typing indicator should show (before the NEXT bot message)
+  const nextChatStepIndex = example.steps.findIndex((s: any, i: number) =>
+    i > currentStep && (s.tool === 'Chatbot' || s.tool === 'Usuario')
+  );
+  const nextChatStep = nextChatStepIndex !== -1 ? example.steps[nextChatStepIndex] : null;
+  const showTypingIndicator = nextChatStep !== null && nextChatStep.tool !== 'Usuario';
+
   return (
     <div classname="w-full max-w-4xl bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden flex flex-col h-[42rem] md:h-[46rem] animate-fade-in-up">
       
@@ -253,7 +260,7 @@ const AgentExamplesSlide = ({ content }: { content: any }) => {
               ))}
               
               {/* Typing Indicator */}
-              {activeStep && activeStep.tool !== 'Usuario' && (
+              {showTypingIndicator && (
                 <div classname="flex justify-start animate-fade-in">
                   <div classname="bg-white border border-slate-200 h-6 px-2 rounded-2xl rounded-tl-none flex items-center gap-1 shadow-sm">
                     <div classname="w-1 h-1 bg-slate-400 rounded-full animate-bounce"></div>
