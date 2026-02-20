@@ -3,7 +3,7 @@ import Layout from './Layout';
 import CTAModal from './CTAModal';
 import { AppRoute } from '../types';
 import { COLORS } from '../constants';
-import { enhancePrompt } from '../services/geminiService';
+import { enhancePrompt, enhanceAgentPrompt } from '../services/geminiService';
 
 interface Day2Props {
   setRoute: (route: AppRoute) => void;
@@ -72,11 +72,10 @@ const Day2: React.FC<Day2Props> = ({ setRoute }) => {
 
   const handleAgentEnhance = async () => {
     if (!agentRol.trim() && !agentContexto.trim() && !agentInstruccion.trim()) return;
-    const combined = `ROL: ${agentRol}\nCONTEXTO: ${agentContexto}\nINSTRUCCIÓN: ${agentInstruccion}`;
     setIsEnhancing(true);
     setError(null);
     try {
-      const betterPrompt = await enhancePrompt(combined);
+      const betterPrompt = await enhanceAgentPrompt(agentRol, agentContexto, agentInstruccion);
       setAgentResult(betterPrompt);
       setTimeout(() => setShowCTA(true), 1500);
     } catch (err: any) {
