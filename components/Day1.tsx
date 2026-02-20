@@ -478,42 +478,82 @@ const AIAgentsSlide = ({ content }: { content: any }) => {
             <div className="relative flex-grow flex items-center justify-center min-h-[300px]">
               
               {/* SVG Connections Layer */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
+              <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 100 100" preserveAspectRatio="none">
                 <defs>
-                  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" fill="#6366f1"/>
-                  </marker>
+                  {/* Gradient for lines - subtle glow */}
+                  <linearGradient id="line-tools" x1="50%" y1="50%" x2="50%" y2="10%">
+                    <stop offset="0%" stopColor="#818cf8" stopOpacity="0.2"/>
+                    <stop offset="100%" stopColor="#6366f1" stopOpacity="0.8"/>
+                  </linearGradient>
+                  <linearGradient id="line-memory" x1="50%" y1="50%" x2="15%" y2="70%">
+                    <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.2"/>
+                    <stop offset="100%" stopColor="#f59e0b" stopOpacity="0.8"/>
+                  </linearGradient>
+                  <linearGradient id="line-action" x1="50%" y1="50%" x2="85%" y2="70%">
+                    <stop offset="0%" stopColor="#34d399" stopOpacity="0.2"/>
+                    <stop offset="100%" stopColor="#10b981" stopOpacity="0.8"/>
+                  </linearGradient>
+                  {/* Glow filter */}
+                  <filter id="glow">
+                    <feGaussianBlur stdDeviation="1.5" result="blur"/>
+                    <feMerge>
+                      <feMergeNode in="blur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
                 </defs>
-                
-                {/* Paths to components */}
-                {/* Brain (Center) to Tools (Top) */}
-                {visibleComponents.includes('tools') && (
-                  <path d="M 50% 50% L 50% 15%" stroke="#818cf8" strokeWidth="2" fill="none" className="animate-pulse-line"/>
-                )}
-                {/* Brain to Memory (Bottom Left) */}
-                {visibleComponents.includes('memory') && (
-                  <path d="M 50% 50% L 20% 70%" stroke="#818cf8" strokeWidth="2" fill="none" className="animate-pulse-line"/>
-                )}
-                {/* Brain to Action (Bottom Right) */}
-                {visibleComponents.includes('action') && (
-                  <path d="M 50% 50% L 80% 70%" stroke="#818cf8" strokeWidth="2" fill="none" className="animate-pulse-line"/>
-                )}
 
-                {/* Animated Flow Particles */}
+                {/* Lines from center to components */}
                 {visibleComponents.includes('tools') && (
-                  <circle r="4" fill="#6366f1">
-                    <animateMotion dur="1.5s" repeatCount="indefinite" path="M 50% 50% L 50% 15%"/>
-                  </circle>
+                  <g>
+                    <line x1="50" y1="50" x2="50" y2="10" stroke="url(#line-tools)" strokeWidth="1.5" strokeDasharray="4 2" opacity="0.6"/>
+                    <circle r="2.5" fill="#6366f1" filter="url(#glow)">
+                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L 0,-40" begin="0s"/>
+                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle r="2.5" fill="#6366f1" filter="url(#glow)">
+                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L 0,-40" begin="0.7s"/>
+                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="0.7s"/>
+                    </circle>
+                    <circle r="2.5" fill="#6366f1" filter="url(#glow)">
+                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L 0,-40" begin="1.4s"/>
+                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="1.4s"/>
+                    </circle>
+                  </g>
                 )}
                 {visibleComponents.includes('memory') && (
-                  <circle r="4" fill="#f59e0b">
-                    <animateMotion dur="1.5s" repeatCount="indefinite" path="M 50% 50% L 20% 70%"/>
-                  </circle>
+                  <g>
+                    <line x1="50" y1="50" x2="15" y2="70" stroke="url(#line-memory)" strokeWidth="1.5" strokeDasharray="4 2" opacity="0.6"/>
+                    <circle r="2.5" fill="#f59e0b" filter="url(#glow)">
+                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L -35,20" begin="0.3s"/>
+                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="0.3s"/>
+                    </circle>
+                    <circle r="2.5" fill="#f59e0b" filter="url(#glow)">
+                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L -35,20" begin="1s"/>
+                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="1s"/>
+                    </circle>
+                    <circle r="2.5" fill="#f59e0b" filter="url(#glow)">
+                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L -35,20" begin="1.7s"/>
+                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="1.7s"/>
+                    </circle>
+                  </g>
                 )}
                 {visibleComponents.includes('action') && (
-                  <circle r="4" fill="#10b981">
-                    <animateMotion dur="1.5s" repeatCount="indefinite" path="M 50% 50% L 80% 70%"/>
-                  </circle>
+                  <g>
+                    <line x1="50" y1="50" x2="85" y2="70" stroke="url(#line-action)" strokeWidth="1.5" strokeDasharray="4 2" opacity="0.6"/>
+                    <circle r="2.5" fill="#10b981" filter="url(#glow)">
+                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L 35,20" begin="0.5s"/>
+                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+                    </circle>
+                    <circle r="2.5" fill="#10b981" filter="url(#glow)">
+                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L 35,20" begin="1.2s"/>
+                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="1.2s"/>
+                    </circle>
+                    <circle r="2.5" fill="#10b981" filter="url(#glow)">
+                      <animateMotion dur="2s" repeatCount="indefinite" path="M 0,0 L 35,20" begin="1.9s"/>
+                      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="1.9s"/>
+                    </circle>
+                  </g>
                 )}
               </svg>
 
