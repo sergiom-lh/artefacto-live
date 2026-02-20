@@ -475,94 +475,54 @@ const AIAgentsSlide = ({ content }: { content: any }) => {
               <p className="text-slate-500 text-sm">El cerebro orquesta, las herramientas ejecutan.</p>
             </div>
 
-            <div className="relative flex-grow flex items-center justify-center min-h-[300px]">
-              
-              {/* SVG Connections Layer */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 1000 1000">
-                <defs>
-                  <filter id="glow">
-                    <feGaussianBlur stdDeviation="4" result="blur"/>
-                    <feMerge>
-                      <feMergeNode in="blur"/>
-                      <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                  </filter>
-                </defs>
-
-                {/* Thin dotted lines from center to components */}
-                {visibleComponents.includes('tools') && (
-                  <g>
-                    <line x1="500" y1="500" x2="500" y2="100" stroke="#a5b4fc" strokeWidth="1" strokeDasharray="2 10" opacity="0.5" strokeLinecap="round"/>
-                    <circle r="4" fill="#818cf8" filter="url(#glow)">
-                      <animateMotion dur="2.5s" repeatCount="indefinite" path="M 0,0 L 0,-400" begin="0s"/>
-                      <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite"/>
-                    </circle>
-                    <circle r="4" fill="#818cf8" filter="url(#glow)">
-                      <animateMotion dur="2.5s" repeatCount="indefinite" path="M 0,0 L 0,-400" begin="1.25s"/>
-                      <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite" begin="1.25s"/>
-                    </circle>
-                  </g>
-                )}
-                {visibleComponents.includes('memory') && (
-                  <g>
-                    <line x1="500" y1="500" x2="150" y2="700" stroke="#fcd34d" strokeWidth="1" strokeDasharray="2 10" opacity="0.5" strokeLinecap="round"/>
-                    <circle r="4" fill="#fbbf24" filter="url(#glow)">
-                      <animateMotion dur="2.5s" repeatCount="indefinite" path="M 0,0 L -350,200" begin="0.4s"/>
-                      <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite" begin="0.4s"/>
-                    </circle>
-                    <circle r="4" fill="#fbbf24" filter="url(#glow)">
-                      <animateMotion dur="2.5s" repeatCount="indefinite" path="M 0,0 L -350,200" begin="1.65s"/>
-                      <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite" begin="1.65s"/>
-                    </circle>
-                  </g>
-                )}
-                {visibleComponents.includes('action') && (
-                  <g>
-                    <line x1="500" y1="500" x2="850" y2="700" stroke="#6ee7b7" strokeWidth="1" strokeDasharray="2 10" opacity="0.5" strokeLinecap="round"/>
-                    <circle r="4" fill="#34d399" filter="url(#glow)">
-                      <animateMotion dur="2.5s" repeatCount="indefinite" path="M 0,0 L 350,200" begin="0.8s"/>
-                      <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite" begin="0.8s"/>
-                    </circle>
-                    <circle r="4" fill="#34d399" filter="url(#glow)">
-                      <animateMotion dur="2.5s" repeatCount="indefinite" path="M 0,0 L 350,200" begin="2.05s"/>
-                      <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite" begin="2.05s"/>
-                    </circle>
-                  </g>
-                )}
-              </svg>
+            <div className="relative flex-grow flex flex-col items-center justify-center gap-5 py-4 px-2 md:px-8 min-h-[300px]">
 
               {/* Central Brain */}
-              <div className={`absolute z-20 transition-all duration-700 transform ${visibleComponents.includes('brain') ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} onClick={() => setSelectedComponent('brain')}>
-                <div className="w-28 h-28 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex flex-col items-center justify-center text-white shadow-xl cursor-pointer hover:shadow-2xl transition-shadow group">
-                  <Brain className="w-10 h-10 mb-1 group-hover:scale-110 transition-transform"/>
-                  <span className="text-[10px] font-bold uppercase tracking-wider">Cerebro</span>
+              <div className={`transition-all duration-700 transform ${visibleComponents.includes('brain') ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} onClick={() => setSelectedComponent('brain')}>
+                <div className="relative cursor-pointer group">
+                  <div className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex flex-col items-center justify-center text-white shadow-xl hover:shadow-2xl transition-shadow">
+                    <Brain className="w-8 h-8 md:w-10 md:h-10 mb-1 group-hover:scale-110 transition-transform"/>
+                    <span className="text-[10px] font-bold uppercase tracking-wider">Cerebro</span>
+                  </div>
+                  <div className="absolute inset-0 rounded-full border-2 border-purple-400 animate-ping opacity-30"></div>
+                  <div className="absolute -inset-3 rounded-full border border-dashed border-purple-200/50 animate-[spin_25s_linear_infinite]"></div>
                 </div>
-                <div className="absolute inset-0 rounded-full border-2 border-purple-400 animate-ping opacity-30"></div>
               </div>
 
-              {/* Orbiting Components */}
-              {content.components.filter((c: any) => c.id !== 'brain').map((comp: any) => {
-                const positions: Record<string, { top: string; left: string }> = {
-                  tools: { top: '10%', left: '50%' },
-                  memory: { top: '70%', left: '15%' },
-                  action: { top: '70%', left: '85%' },
-                };
-                const pos = positions[comp.id] || { top: '50%', left: '50%' };
-                return (
-                  <div key={comp.id}
-                    className={`absolute z-10 transition-all duration-700 transform cursor-pointer group ${visibleComponents.includes(comp.id) ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}
-                    style={{ top: pos.top, left: pos.left, transform: 'translate(-50%, -50%)' }}
-                    onClick={() => setSelectedComponent(comp.id)}
-                  >
-                    <div className="flex flex-col items-center">
-                      <div className={`p-2 rounded-full ${comp.color} mb-1 group-hover:scale-110 transition-transform`}>
-                        {getIcon(comp.icon)}
+              {/* Animated connection dots */}
+              <div className={`flex items-center justify-center gap-1.5 transition-all duration-700 ${visibleComponents.length > 1 ? 'opacity-100' : 'opacity-0'}`}>
+                <div className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></div>
+                <div className="w-10 md:w-16 h-px bg-gradient-to-r from-blue-300 to-blue-100"></div>
+                <div className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                <div className="w-10 md:w-16 h-px bg-gradient-to-r from-purple-100 via-amber-200 to-amber-100"></div>
+                <div className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                <div className="w-10 md:w-16 h-px bg-gradient-to-r from-amber-100 to-emerald-100"></div>
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" style={{animationDelay: '0.6s'}}></div>
+              </div>
+
+              {/* Satellite Component Cards */}
+              <div className="grid grid-cols-3 gap-3 md:gap-5 w-full max-w-sm md:max-w-md">
+                {content.components.filter((c: any) => c.id !== 'brain').map((comp: any) => {
+                  const borderColors: Record<string, string> = {
+                    tools: 'hover:border-blue-300',
+                    memory: 'hover:border-amber-300',
+                    action: 'hover:border-emerald-300',
+                  };
+                  return (
+                    <div key={comp.id}
+                      className={`transition-all duration-700 transform cursor-pointer group ${visibleComponents.includes(comp.id) ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-75 translate-y-4'}`}
+                      onClick={() => setSelectedComponent(comp.id)}
+                    >
+                      <div className={`flex flex-col items-center bg-white rounded-2xl shadow-md p-3 md:p-5 hover:shadow-lg border border-slate-100 ${borderColors[comp.id] || ''} transition-all`}>
+                        <div className={`p-2.5 md:p-3 rounded-full ${comp.color} mb-2 group-hover:scale-110 transition-transform`}>
+                          {getIcon(comp.icon)}
+                        </div>
+                        <span className="text-[10px] md:text-xs font-bold text-slate-700 text-center leading-tight">{comp.name}</span>
                       </div>
-                      <span className="text-[10px] font-bold text-slate-600">{comp.name}</span>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
 
             {/* Detail Modal/Overlay */}
