@@ -16,10 +16,7 @@ const getUserClient = async () => {
         throw new Error("API Key not selected");
      }
   }
-  // The SDK automatically picks up the selected key if we use a new instance in this context
-  // However, for safety in this specific web container environment, we rely on the injected process.env.API_KEY
-  // for standard calls, but for Veo/Pro we strictly follow the guidance to ensure the user has authorized it.
-  
+
   return new GoogleGenAI({ apiKey: process.env.API_KEY });
 };
 
@@ -45,14 +42,37 @@ export const openKeySelection = async () => {
   }
 };
 
-// Day 2: Enhance Prompt
+// Day 2: Enhance Prompt (for image/video)
 export const enhancePrompt = async (originalPrompt: string): Promise<string> => {
   const ai = getEnvClient();
   const response = await ai.models.generateContent({
-    model: 'gemini-3-flash-preview',
+    model: 'gemini-2.5-flash',
     contents: `Mejora el siguiente prompt para un generador de imágenes o video de IA. Hazlo más descriptivo, visual y detallado, pero mantén la idea original. Devuelve SOLO el prompt mejorado en español: "${originalPrompt}"`,
   });
   return response.text || originalPrompt;
+};
+
+// Day 2: Generate Agent System Prompt
+export const enhanceAgentPrompt = async (rol: string, contexto: string, instruccion: string): Promise<string> => {
+  const ai = getEnvClient();
+  const response = await ai.models.generateContent({
+    model: 'gemini-2.5-flash',
+    contents: `Eres un experto en prompt engineering para agentes de IA. El usuario te da 3 campos y tú debes generar un System Prompt profesional y completo para un agente de IA.
+
+CAMPOS DEL USUARIO:
+- ROL: ${rol}
+- CONTEXTO: ${contexto}
+- INSTRUCCIÓN: ${instruccion}
+
+REGLAS:
+1. Genera un System Prompt profesional en español que un desarrollador pueda copiar y pegar directamente en cualquier LLM (ChatGPT, Claude, Gemini, etc.)
+2. Estructura el prompt con secciones claras: Identidad, Contexto, Instrucciones, Formato de Respuesta, Restricciones
+3. Sé específico y detallado, ampliando lo que el usuario escribió
+4. Usa un tono profesional y directo
+5. Devuelve SOLO el system prompt, sin explicaciones ni comentarios adicionales
+6. NO generes descripciones de imágenes ni escenas visuales`,
+  });
+  return response.text || '';
 };
 
 // Day 2: Generate Image (Gemini 2.5 Flash Image)
@@ -112,7 +132,7 @@ export const generateVideo = async (prompt: string): Promise<string> => {
 export const sendConsultantMessage = async (history: {role: string, parts: {text: string}[]}[], newMessage: string) => {
   const ai = getEnvClient();
   const chat = ai.chats.create({
-    model: 'gemini-3-flash-preview',
+    model: 'gemini-2.5-flash',
     config: {
       systemInstruction: `Actúa como un Consultor de Carrera experto de "IA Heroes". 
       Tu objetivo es persuadir sutilmente y educar al usuario sobre por qué el programa "IA Heroes Pro" es vital para su futuro.
@@ -139,7 +159,7 @@ export const analyzeBusiness = async (url: string) => {
   const ai = getEnvClient();
   
   const response = await ai.models.generateContent({
-    model: 'gemini-3-flash-preview',
+    model: 'gemini-2.5-flash',
     contents: `Analiza este negocio: ${url}. Si es una URL válida, busca información sobre ella. Si no, analiza la descripción. Luego, sigue las instrucciones del sistema.`,
     config: {
       systemInstruction: AGENT_ANALYSIS_SYSTEM_PROMPT,
