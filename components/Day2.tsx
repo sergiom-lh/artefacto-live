@@ -9,13 +9,13 @@ interface Day2Props {
   setRoute: (route: AppRoute) => void;
 }
 
-const Day2: React.FC<day2props> = ({ setRoute }) => {
+const Day2: React.FC<Day2Props> = ({ setRoute }) => {
   const [mode, setMode] = useState<'image' | 'video'>('image');
   const [prompt, setPrompt] = useState('');
   const [isEnhancing, setIsEnhancing] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [resultUrl, setResultUrl] = useState<string |="" null="">(null);
-  const [error, setError] = useState<string |="" null="">(null);
+  const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [hasKey, setHasKey] = useState(false);
   const [isOptimized, setIsOptimized] = useState(false);
   const [showCTA, setShowCTA] = useState(false);
@@ -54,7 +54,6 @@ const Day2: React.FC<day2props> = ({ setRoute }) => {
     setResultUrl(null);
 
     try {
-      // API Key is only strictly required for Veo (Video)
       if (mode === 'video' && !hasKey) {
           await handleConnectKey();
       }
@@ -66,8 +65,7 @@ const Day2: React.FC<day2props> = ({ setRoute }) => {
         url = await generateVideo(prompt);
       }
       setResultUrl(url);
-      
-      // Show CTA shortly after result appears
+
       setTimeout(() => {
         setShowCTA(true);
       }, 2000);
@@ -85,27 +83,27 @@ const Day2: React.FC<day2props> = ({ setRoute }) => {
     }
   };
 
-  const handlePromptChange = (e: React.ChangeEvent<htmltextareaelement>) => {
+  const handlePromptChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setPrompt(e.target.value);
     setIsOptimized(false);
   };
 
   return (
-    <layout title="Día 2: Estudio Creativo" onback="{()" ==""> setRoute(AppRoute.HOME)}>
-      <ctamodal isopen="{showCTA}" onclose="{()" ==""> setShowCTA(false)} 
+    <Layout title="Día 2: Estudio Creativo" onBack={() => setRoute(AppRoute.HOME)}>
+      <CTAModal isOpen={showCTA} onClose={() => setShowCTA(false)}
         title="¡Increíble resultado!"
         message="¿Ves lo fácil que es crear contenido profesional con IA? En IA Heroes Pro aprenderás a usar estas herramientas para marketing y ventas."
       />
 
-      <div classname="space-y-6">
+      <div className="space-y-6">
         {/* Mode Toggles */}
-        <div classname="bg-white p-2 rounded-xl shadow-sm border border-slate-200 flex">
-          <button onclick="{()" ==""> { setMode('image'); setResultUrl(null); setError(null); }}
+        <div className="bg-white p-2 rounded-xl shadow-sm border border-slate-200 flex">
+          <button onClick={() => { setMode('image'); setResultUrl(null); setError(null); }}
             className={`flex-1 py-3 px-2 rounded-lg text-sm md:text-base font-bold transition-all ${mode === 'image' ? 'bg-slate-800 text-white' : 'text-slate-500 hover:bg-slate-50'}`}
           >
             📸 Imagen (Flash)
           </button>
-          <button onclick="{()" ==""> { setMode('video'); setResultUrl(null); setError(null); }}
+          <button onClick={() => { setMode('video'); setResultUrl(null); setError(null); }}
             className={`flex-1 py-3 px-2 rounded-lg text-sm md:text-base font-bold transition-all ${mode === 'video' ? 'bg-slate-800 text-white' : 'text-slate-500 hover:bg-slate-50'}`}
           >
             🎥 Video (Veo)
@@ -114,34 +112,39 @@ const Day2: React.FC<day2props> = ({ setRoute }) => {
 
         {/* API Key Gate - Only for Video */}
         {!hasKey && mode === 'video' ? (
-           <div classname="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-r-xl shadow-sm">
-            <h3 classname="font-bold text-yellow-800 text-lg mb-2">Acceso Requerido para Video</h3>
-            <p classname="text-yellow-700 mb-4 text-sm md:text-base">
+           <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-r-xl shadow-sm">
+            <h3 className="font-bold text-yellow-800 text-lg mb-2">Acceso Requerido para Video</h3>
+            <p className="text-yellow-700 mb-4 text-sm md:text-base">
               Para usar el modelo de generación de video <strong>Veo</strong>, necesitas conectar tu cuenta de Google.
             </p>
-            <button onclick="{handleConnectKey}" classname="bg-yellow-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-yellow-700 transition w-full md:w-auto">
+            <button onClick={handleConnectKey} className="bg-yellow-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-yellow-700 transition w-full md:w-auto">
               🔑 Conectar Cuenta Google
             </button>
-            <div classname="mt-3 text-xs text-yellow-600">
-               <a href="https://ai.google.dev/gemini-api/docs/billing" target="_blank" rel="noreferrer" classname="underline">Información sobre facturación</a>
+            <div className="mt-3 text-xs text-yellow-600">
+               <a href="https://ai.google.dev/gemini-api/docs/billing" target="_blank" rel="noreferrer" className="underline">Información sobre facturación</a>
             </div>
           </div>
         ) : (
-          <div classname="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-slate-100 space-y-4 relative">
-            
-            <div classname="flex flex-wrap justify-between items-end gap-2">
-              <label classname="block text-base md:text-lg font-medium text-slate-700">
+          <div className="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-slate-100 space-y-4 relative">
+
+            <div className="flex flex-wrap justify-between items-end gap-2">
+              <label className="block text-base md:text-lg font-medium text-slate-700">
                 Describe lo que quieres crear:
               </label>
               {isOptimized && (
-                <span classname="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full flex items-center gap-1 animate-pulse">
-                  <span classname="text-emerald-500">✨</span> Optimizado
+                <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full flex items-center gap-1 animate-pulse">
+                  <span className="text-emerald-500">✨</span> Optimizado
                 </span>
               )}
             </div>
 
-            <textarea value="{prompt}" onchange="{handlePromptChange}" placeholder="{mode" =="=" 'image'="" ?="" "un="" robot="" futurista="" pintando="" un="" cuadro..."="" :="" "un="" gato="" conduciendo="" un="" coche="" deportivo="" de="" neón..."}="" classname="{`w-full" p-4="" rounded-xl="" border="" focus:ring-2="" focus:ring-pink-500="" focus:border-transparent="" outline-none="" min-h-[120px]="" text-base="" md:text-lg="" bg-white="" text-slate-900="" placeholder-slate-400="" transition-colors="" ${isoptimized="" ?="" 'border-emerald-300="" ring-1="" ring-emerald-100'="" :="" 'border-slate-300'}`}=""/>
-            
+            <textarea
+              value={prompt}
+              onChange={handlePromptChange}
+              placeholder={mode === 'image' ? "un robot futurista pintando un cuadro..." : "un gato conduciendo un coche deportivo de neón..."}
+              className={`w-full p-4 rounded-xl border focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none min-h-[120px] text-base md:text-lg bg-white text-slate-900 placeholder-slate-400 transition-colors ${isOptimized ? 'border-emerald-300 ring-1 ring-emerald-100' : 'border-slate-300'}`}
+            />
+
             <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={handleEnhance}
@@ -149,8 +152,8 @@ const Day2: React.FC<day2props> = ({ setRoute }) => {
                 className="flex-1 py-3 px-4 rounded-xl border-2 border-slate-200 font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50 flex justify-center items-center gap-2 text-sm md:text-base"
               >
                  {isEnhancing ? (
-                    <span className="animate-spin">✨</span> 
-                 ) : '✨'} 
+                    <span className="animate-spin">✨</span>
+                 ) : '✨'}
                  Mejorar Prompt
               </button>
               <button

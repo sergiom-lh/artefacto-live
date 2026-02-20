@@ -7,27 +7,27 @@ import Day4 from './components/Day4';
 import { AppRoute } from './types';
 
 const App: React.FC = () => {
-  const [route, setRoute] = useState<approute>(AppRoute.HOME);
+  const [route, setRoute] = useState<AppRoute>(AppRoute.HOME);
 
   const renderContent = () => {
     switch (route) {
       case AppRoute.HOME:
-        return <home setroute="{setRoute}"/>;
+        return <Home setRoute={setRoute} />;
       case AppRoute.DAY_1:
-        return <day1 setroute="{setRoute}"/>;
+        return <Day1 setRoute={setRoute} />;
       case AppRoute.DAY_2:
-        return <day2 setroute="{setRoute}"/>;
+        return <Day2 setRoute={setRoute} />;
       case AppRoute.DAY_3:
-        return <day3 setroute="{setRoute}"/>;
+        return <Day3 setRoute={setRoute} />;
       case AppRoute.DAY_4:
-        return <day4 setroute="{setRoute}"/>;
+        return <Day4 setRoute={setRoute} />;
       default:
-        return <home setroute="{setRoute}"/>;
+        return <Home setRoute={setRoute} />;
     }
   };
 
   return (
-    <div classname="app-container">
+    <div className="app-container">
       {renderContent()}
     </div>
   );

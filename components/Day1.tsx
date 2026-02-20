@@ -174,7 +174,7 @@ Su funcionamiento es opaco (**caja negra**), lo que implica riesgos como alucina
 const AgentExamplesSlide = ({ content }: { content: any }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const example = content.examples[0];
-  const chatEndRef = useRef<htmldivelement>(null);
+  const chatEndRef = useRef<HTMLDivElement>(null);
 
   // Auto-play loop logic
   useEffect(() => {
@@ -197,12 +197,12 @@ const AgentExamplesSlide = ({ content }: { content: any }) => {
 
   const getIcon = (name: string) => {
     switch(name) {
-      case 'MessageSquare': return <messagesquare classname="w-4 h-4"/>;
-      case 'MessageCircle': return <messagecircle classname="w-4 h-4"/>;
-      case 'Calendar': return <calendar classname="w-4 h-4"/>;
-      case 'Brain': return <brain classname="w-4 h-4"/>;
-      case 'Database': return <database classname="w-4 h-4"/>;
-      default: return <zap classname="w-4 h-4"/>;
+      case 'MessageSquare': return <MessageSquare className="w-4 h-4"/>;
+      case 'MessageCircle': return <MessageCircle className="w-4 h-4"/>;
+      case 'Calendar': return <Calendar className="w-4 h-4"/>;
+      case 'Brain': return <Brain className="w-4 h-4"/>;
+      case 'Database': return <Database className="w-4 h-4"/>;
+      default: return <Zap className="w-4 h-4"/>;
     }
   };
 
@@ -222,35 +222,35 @@ const AgentExamplesSlide = ({ content }: { content: any }) => {
   const showTypingIndicator = nextChatStep !== null && nextChatStep.tool !== 'Usuario';
 
   return (
-    <div classname="w-full max-w-4xl bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden flex flex-col h-[42rem] md:h-[46rem] animate-fade-in-up">
+    <div className="w-full max-w-4xl bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden flex flex-col h-[42rem] md:h-[46rem] animate-fade-in-up">
       
       {/* Header */}
-      <div classname="bg-slate-50 p-4 border-b border-slate-100 text-center relative">
-        <div classname="inline-flex items-center justify-center p-2 bg-white rounded-full shadow-sm mb-2">
-          <bot classname="w-6 h-6 text-indigo-600"/>
+      <div className="bg-slate-50 p-4 border-b border-slate-100 text-center relative">
+        <div className="inline-flex items-center justify-center p-2 bg-white rounded-full shadow-sm mb-2">
+          <Bot className="w-6 h-6 text-indigo-600"/>
         </div>
-        <h3 classname="text-xl font-bold text-slate-800 mb-1">{example.title}</h3>
-        <p classname="text-slate-500 text-sm italic">"{example.scenario}"</p>
+        <h3 className="text-xl font-bold text-slate-800 mb-1">{example.title}</h3>
+        <p className="text-slate-500 text-sm italic">"{example.scenario}"</p>
       </div>
 
-      <div classname="p-4 md:p-6 overflow-hidden flex-grow flex flex-col">
+      <div className="p-4 md:p-6 overflow-hidden flex-grow flex flex-col">
         
         {/* Simulation Area */}
-        <div classname="flex-grow flex flex-col md:flex-row gap-4 h-full overflow-hidden">
+        <div className="flex-grow flex flex-col md:flex-row gap-4 h-full overflow-hidden">
           
           {/* Chat Interface Simulation */}
-          <div classname="flex-1 bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden flex flex-col shadow-inner relative h-full">
-            <div classname="bg-white p-2 border-b border-slate-100 flex items-center gap-2 shadow-sm z-10">
-              <div classname="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-              <span classname="text-[10px] font-bold text-slate-600 uppercase tracking-wider">Chat en Vivo</span>
+          <div className="flex-1 bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden flex flex-col shadow-inner relative h-full">
+            <div className="bg-white p-2 border-b border-slate-100 flex items-center gap-2 shadow-sm z-10">
+              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+              <span className="text-[10px] font-bold text-slate-600 uppercase tracking-wider">Chat en Vivo</span>
             </div>
             
-            <div classname="flex-grow p-3 overflow-y-auto custom-scrollbar space-y-3 bg-slate-50/50">
+            <div className="flex-grow p-3 overflow-y-auto custom-scrollbar space-y-3 bg-slate-50/50">
               {chatSteps.map((step: any) => (
-                <div key="{step.id}" classname="{`flex" w-full="" ${step.tool="==" 'usuario'="" ?="" 'justify-end'="" :="" 'justify-start'}="" animate-fade-in-up`}="">
-                  <div classname="{`max-w-[85%]" p-2.5="" rounded-2xl="" text-xs="" md:text-sm="" shadow-sm="" ${="" step.tool="==" 'usuario'="" ?="" 'bg-indigo-600="" text-white="" rounded-tr-none'="" :="" 'bg-white="" text-slate-700="" border="" border-slate-200="" rounded-tl-none'="" }`}="">
+                <div key={step.id} className={`flex w-full ${step.tool === 'Usuario' ? 'justify-end' : 'justify-start'} animate-fade-in-up`}>
+                  <div className={`max-w-[85%] p-2.5 rounded-2xl text-xs md:text-sm shadow-sm ${ step.tool === 'Usuario' ? 'bg-indigo-600 text-white rounded-tr-none' : 'bg-white text-slate-700 border border-slate-200 rounded-tl-none' }`}>
                     {step.tool !== 'Usuario' && (
-                      <div classname="flex items-center gap-1 mb-0.5 font-bold text-indigo-600 text-[10px] uppercase tracking-wide">
+                      <div className="flex items-center gap-1 mb-0.5 font-bold text-indigo-600 text-[10px] uppercase tracking-wide">
                         {step.tool}
                       </div>
                     )}
@@ -261,57 +261,57 @@ const AgentExamplesSlide = ({ content }: { content: any }) => {
               
               {/* Typing Indicator */}
               {showTypingIndicator && (
-                <div classname="flex justify-start animate-fade-in">
-                  <div classname="bg-white border border-slate-200 h-6 px-2 rounded-2xl rounded-tl-none flex items-center gap-1 shadow-sm">
-                    <div classname="w-1 h-1 bg-slate-400 rounded-full animate-bounce"></div>
-                    <div classname="w-1 h-1 bg-slate-400 rounded-full animate-bounce delay-100"></div>
-                    <div classname="w-1 h-1 bg-slate-400 rounded-full animate-bounce delay-200"></div>
+                <div className="flex justify-start animate-fade-in">
+                  <div className="bg-white border border-slate-200 h-6 px-2 rounded-2xl rounded-tl-none flex items-center gap-1 shadow-sm">
+                    <div className="w-1 h-1 bg-slate-400 rounded-full animate-bounce"></div>
+                    <div className="w-1 h-1 bg-slate-400 rounded-full animate-bounce delay-100"></div>
+                    <div className="w-1 h-1 bg-slate-400 rounded-full animate-bounce delay-200"></div>
                   </div>
                 </div>
               )}
-              <div ref="{chatEndRef}"/>
+              <div ref={chatEndRef}/>
             </div>
           </div>
 
           {/* Dashboard / Stats / Live Status */}
-          <div classname="w-full md:w-1/3 flex flex-col gap-3 h-full overflow-hidden">
+          <div className="w-full md:w-1/3 flex flex-col gap-3 h-full overflow-hidden">
             
             {/* Live Process Status */}
-            <div classname="bg-white p-4 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden flex-shrink-0">
-              <div classname="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
-              <h5 classname="font-bold text-slate-400 text-[10px] uppercase tracking-widest mb-2 flex items-center gap-2">
-                <cpu classname="w-3 h-3 animate-pulse text-indigo-500"/>
+            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden flex-shrink-0">
+              <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
+              <h5 className="font-bold text-slate-400 text-[10px] uppercase tracking-widest mb-2 flex items-center gap-2">
+                <Cpu className="w-3 h-3 animate-pulse text-indigo-500"/>
                 Proceso en Tiempo Real
               </h5>
               
-              <div classname="min-h-[60px] flex flex-col justify-center">
+              <div className="min-h-[60px] flex flex-col justify-center">
                 {activeStep ? (
-                  <div classname="animate-fade-in">
-                    <div classname="flex items-center gap-2 mb-1 text-indigo-600 font-bold text-xs">
+                  <div className="animate-fade-in">
+                    <div className="flex items-center gap-2 mb-1 text-indigo-600 font-bold text-xs">
                       {getIcon(activeStep.icon)}
                       {activeStep.tool}
                     </div>
-                    <p classname="text-slate-700 text-xs leading-relaxed line-clamp-2">
+                    <p className="text-slate-700 text-xs leading-relaxed line-clamp-2">
                       {activeStep.action.replace(/^.*: "/, '').replace(/"$/, '')}
                     </p>
                   </div>
                 ) : (
-                  <p classname="text-slate-400 text-xs italic">Esperando inicio...</p>
+                  <p className="text-slate-400 text-xs italic">Esperando inicio...</p>
                 )}
               </div>
             </div>
 
             {/* Tools Used (Active Highlight) */}
-            <div classname="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex-shrink-0">
-              <h5 classname="font-bold text-slate-400 text-[10px] uppercase tracking-widest mb-2">Stack Tecnológico</h5>
-              <div classname="grid grid-cols-1 gap-1.5">
+            <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex-shrink-0">
+              <h5 className="font-bold text-slate-400 text-[10px] uppercase tracking-widest mb-2">Stack Tecnológico</h5>
+              <div className="grid grid-cols-1 gap-1.5">
                 {example.tools.map((tool: any, idx: number) => {
                   const isActive = activeStep && (activeStep.tool === tool.name || activeStep.icon === tool.icon);
                   return (
-                    <div key="{idx}" classname="{`flex" items-center="" gap-2="" p-1.5="" rounded-lg="" border="" transition-all="" duration-300="" ${="" isactive="" ?="" 'bg-indigo-50="" border-indigo-200="" shadow-sm="" scale-105'="" :="" 'bg-slate-50="" border-slate-100="" opacity-70'="" }`}="">
-                      <div classname="{`p-1" rounded-md="" bg-white="" shadow-sm="" ${tool.color}`}="">{getIcon(tool.icon)}</div>
-                      <span classname="{`text-xs" font-bold="" ${isactive="" ?="" 'text-indigo-700'="" :="" 'text-slate-600'}`}="">{tool.name}</span>
-                      {isActive && <div classname="ml-auto w-1.5 h-1.5 bg-indigo-500 rounded-full animate-ping"></div>}
+                    <div key={idx} className={`flex items-center gap-2 p-1.5 rounded-lg border transition-all duration-300 ${ isActive ? 'bg-indigo-50 border-indigo-200 shadow-sm scale-105' : 'bg-slate-50 border-slate-100 opacity-70' }`}>
+                      <div className={`p-1 rounded-md bg-white shadow-sm ${tool.color}`}>{getIcon(tool.icon)}</div>
+                      <span className={`text-xs font-bold ${isActive ? 'text-indigo-700' : 'text-slate-600'}`}>{tool.name}</span>
+                      {isActive && <div className="ml-auto w-1.5 h-1.5 bg-indigo-500 rounded-full animate-ping"></div>}
                     </div>
                   );
                 })}
@@ -319,15 +319,15 @@ const AgentExamplesSlide = ({ content }: { content: any }) => {
             </div>
 
             {/* Metrics */}
-            <div classname="{`bg-gradient-to-br" from-slate-800="" to-slate-900="" text-white="" p-4="" rounded-xl="" shadow-lg="" mt-auto="" transition-all="" duration-700="" flex-shrink-0="" ${currentstep="==" example.steps.length="" -="" 1="" ?="" 'opacity-100="" scale-100'="" :="" 'opacity-80="" scale-95="" grayscale'}`}="">
-              <h5 classname="font-bold text-slate-400 text-[10px] uppercase tracking-widest mb-3">Métricas</h5>
-              <div classname="flex justify-between items-end mb-2">
-                <span classname="text-slate-300 text-xs">Tiempo</span>
-                <span classname="text-lg font-mono font-bold text-emerald-400">Inmediato</span>
+            <div className={`bg-gradient-to-br from-slate-800 to-slate-900 text-white p-4 rounded-xl shadow-lg mt-auto transition-all duration-700 flex-shrink-0 ${currentStep === example.steps.length - 1 ? 'opacity-100 scale-100' : 'opacity-80 scale-95 grayscale'}`}>
+              <h5 className="font-bold text-slate-400 text-[10px] uppercase tracking-widest mb-3">Métricas</h5>
+              <div className="flex justify-between items-end mb-2">
+                <span className="text-slate-300 text-xs">Tiempo</span>
+                <span className="text-lg font-mono font-bold text-emerald-400">Inmediato</span>
               </div>
-              <div classname="flex justify-between items-end">
-                <span classname="text-slate-300 text-xs">Conversión</span>
-                <span classname="text-lg font-mono font-bold text-emerald-400">+40%</span>
+              <div className="flex justify-between items-end">
+                <span className="text-slate-300 text-xs">Conversión</span>
+                <span className="text-lg font-mono font-bold text-emerald-400">+40%</span>
               </div>
             </div>
 
@@ -343,11 +343,11 @@ const AgentExamplesSlide = ({ content }: { content: any }) => {
 const AIAgentsSlide = ({ content }: { content: any }) => {
   const [activeTab, setActiveTab] = useState<'diagram' | 'comparison' | 'exercise'>('diagram');
   const [visibleComponents, setVisibleComponents] = useState<string[]>([]);
-  const [selectedComponent, setSelectedComponent] = useState<string |="" null="">(null);
+  const [selectedComponent, setSelectedComponent] = useState<string | null>(null);
   
   // Exercise State
-  const [matches, setMatches] = useState<record<string, string="">>({});
-  const [selectedMatchId, setSelectedMatchId] = useState<string |="" null="">(null);
+  const [matches, setMatches] = useState<Record<string, string>>({});
+  const [selectedMatchId, setSelectedMatchId] = useState<string | null>(null);
   const [isExerciseComplete, setIsExerciseComplete] = useState(false);
 
   // Animation Sequence
@@ -371,11 +371,11 @@ const AIAgentsSlide = ({ content }: { content: any }) => {
 
   const getIcon = (name: string) => {
     switch(name) {
-      case 'Brain': return <brain classname="w-6 h-6"/>;
-      case 'Wrench': return <wrench classname="w-6 h-6"/>;
-      case 'Database': return <database classname="w-6 h-6"/>;
-      case 'Zap': return <zap classname="w-6 h-6"/>;
-      default: return <bot classname="w-6 h-6"/>;
+      case 'Brain': return <Brain className="w-6 h-6"/>;
+      case 'Wrench': return <Wrench className="w-6 h-6"/>;
+      case 'Database': return <Database className="w-6 h-6"/>;
+      case 'Zap': return <Zap className="w-6 h-6"/>;
+      default: return <Bot className="w-6 h-6"/>;
     }
   };
 
@@ -406,7 +406,7 @@ const AIAgentsSlide = ({ content }: { content: any }) => {
   };
 
   return (
-    <div classname="w-full max-w-4xl bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden flex flex-col h-[40rem] md:h-[44rem] animate-fade-in-up">
+    <div className="w-full max-w-4xl bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden flex flex-col h-[40rem] md:h-[44rem] animate-fade-in-up">
       <style>{`
         @keyframes flow-down {
           0% { top: 0%; opacity: 0; }
@@ -442,45 +442,45 @@ const AIAgentsSlide = ({ content }: { content: any }) => {
         }
       `}</style>
 
-      <div classname="flex border-b border-slate-100">
-        <button onclick="{()" ==""> setActiveTab('diagram')}
+      <div className="flex border-b border-slate-100">
+        <button onClick={() => setActiveTab('diagram')}
           className={`flex-1 py-4 text-sm font-bold uppercase tracking-wider transition-colors ${activeTab === 'diagram' ? 'text-indigo-600 border-b-2 border-indigo-600 bg-indigo-50/50' : 'text-slate-400 hover:text-slate-600'}`}
         >
           Diagrama Interactivo
         </button>
-        <button onclick="{()" ==""> setActiveTab('comparison')}
+        <button onClick={() => setActiveTab('comparison')}
           className={`flex-1 py-4 text-sm font-bold uppercase tracking-wider transition-colors ${activeTab === 'comparison' ? 'text-indigo-600 border-b-2 border-indigo-600 bg-indigo-50/50' : 'text-slate-400 hover:text-slate-600'}`}
         >
           Antes vs Después
         </button>
-        <button onclick="{()" ==""> setActiveTab('exercise')}
+        <button onClick={() => setActiveTab('exercise')}
           className={`flex-1 py-4 text-sm font-bold uppercase tracking-wider transition-colors ${activeTab === 'exercise' ? 'text-indigo-600 border-b-2 border-indigo-600 bg-indigo-50/50' : 'text-slate-400 hover:text-slate-600'}`}
         >
           Ejercicio
         </button>
       </div>
 
-      <div classname="p-6 md:p-8 overflow-y-auto custom-scrollbar flex-grow relative">
+      <div className="p-6 md:p-8 overflow-y-auto custom-scrollbar flex-grow relative">
         
         {/* DIAGRAM TAB */}
         {activeTab === 'diagram' && (
-          <div classname="h-full flex flex-col relative overflow-hidden">
+          <div className="h-full flex flex-col relative overflow-hidden">
             {/* Background Tech Effect */}
-            <div classname="absolute inset-0 opacity-5 pointer-events-none">
-              <div classname="absolute inset-0" style="{{" backgroundimage:="" 'radial-gradient(#4f46e5="" 1px,="" transparent="" 1px)',="" backgroundsize:="" '20px="" 20px'="" }}=""></div>
+            <div className="absolute inset-0 opacity-5 pointer-events-none">
+              <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(#4f46e5 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
             </div>
 
-            <div classname="text-center mb-4 relative z-10">
-              <h3 classname="text-2xl font-bold text-slate-800 mb-2">Anatomía de un Agente</h3>
-              <p classname="text-slate-500 text-sm">El cerebro orquesta, las herramientas ejecutan.</p>
+            <div className="text-center mb-4 relative z-10">
+              <h3 className="text-2xl font-bold text-slate-800 mb-2">Anatomía de un Agente</h3>
+              <p className="text-slate-500 text-sm">El cerebro orquesta, las herramientas ejecutan.</p>
             </div>
 
-            <div classname="relative flex-grow flex items-center justify-center min-h-[300px]">
+            <div className="relative flex-grow flex items-center justify-center min-h-[300px]">
               
               {/* SVG Connections Layer */}
-              <svg classname="absolute inset-0 w-full h-full pointer-events-none z-0">
+              <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
                 <defs>
-                  <marker id="arrowhead" markerwidth="10" markerheight="7" refx="9" refy="3.5" orient="auto">
+                  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
                     <polygon points="0 0, 10 3.5, 0 7" fill="#6366f1"/>
                   </marker>
                 </defs>
@@ -488,83 +488,87 @@ const AIAgentsSlide = ({ content }: { content: any }) => {
                 {/* Paths to components */}
                 {/* Brain (Center) to Tools (Top) */}
                 {visibleComponents.includes('tools') && (
-                  <path d="M 50% 50% L 50% 15%" stroke="#818cf8" strokewidth="2" fill="none" classname="animate-pulse-line"/>
+                  <path d="M 50% 50% L 50% 15%" stroke="#818cf8" strokeWidth="2" fill="none" className="animate-pulse-line"/>
                 )}
                 {/* Brain to Memory (Bottom Left) */}
                 {visibleComponents.includes('memory') && (
-                  <path d="M 50% 50% L 20% 70%" stroke="#818cf8" strokewidth="2" fill="none" classname="animate-pulse-line"/>
+                  <path d="M 50% 50% L 20% 70%" stroke="#818cf8" strokeWidth="2" fill="none" className="animate-pulse-line"/>
                 )}
                 {/* Brain to Action (Bottom Right) */}
                 {visibleComponents.includes('action') && (
-                  <path d="M 50% 50% L 80% 70%" stroke="#818cf8" strokewidth="2" fill="none" classname="animate-pulse-line"/>
+                  <path d="M 50% 50% L 80% 70%" stroke="#818cf8" strokeWidth="2" fill="none" className="animate-pulse-line"/>
                 )}
 
                 {/* Animated Flow Particles */}
                 {visibleComponents.includes('tools') && (
                   <circle r="4" fill="#6366f1">
-                    <animatemotion dur="1.5s" repeatcount="indefinite" path="M 50% 50% L 50% 15%"/>
+                    <animateMotion dur="1.5s" repeatCount="indefinite" path="M 50% 50% L 50% 15%"/>
                   </circle>
                 )}
                 {visibleComponents.includes('memory') && (
                   <circle r="4" fill="#f59e0b">
-                    <animatemotion dur="1.5s" repeatcount="indefinite" path="M 50% 50% L 20% 70%"/>
+                    <animateMotion dur="1.5s" repeatCount="indefinite" path="M 50% 50% L 20% 70%"/>
                   </circle>
                 )}
                 {visibleComponents.includes('action') && (
                   <circle r="4" fill="#10b981">
-                    <animatemotion dur="1.5s" repeatcount="indefinite" path="M 50% 50% L 80% 70%"/>
+                    <animateMotion dur="1.5s" repeatCount="indefinite" path="M 50% 50% L 80% 70%"/>
                   </circle>
                 )}
               </svg>
 
               {/* Central Brain */}
-              <div classname="{`absolute" z-20="" transition-all="" duration-700="" transform="" ${visiblecomponents.includes('brain')="" ?="" 'opacity-100="" scale-100'="" :="" 'opacity-0="" scale-50'}`}="" style="{{" top:="" '50%',="" left:="" '50%',="" transform:="" 'translate(-50%,="" -50%)'="" }}="" onclick="{()" ==""> setSelectedComponent('brain')}
-              >
-                <div classname="w-28 h-28 bg-white rounded-full flex flex-col items-center justify-center border-4 border-purple-100 shadow-[0_0_30px_rgba(168,85,247,0.3)] cursor-pointer hover:scale-105 transition-transform relative overflow-hidden group">
-                  <div classname="absolute inset-0 bg-purple-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <brain classname="w-10 h-10 text-purple-600 mb-1 relative z-10"/>
-                  <span classname="text-xs font-bold text-slate-700 relative z-10">CEREBRO</span>
-                  {/* Pulse Ring */}
-                  <div classname="absolute inset-0 rounded-full border-2 border-purple-400 opacity-0 animate-ping"></div>
+              <div className={`absolute z-20 transition-all duration-700 transform ${visibleComponents.includes('brain') ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} onClick={() => setSelectedComponent('brain')}>
+                <div className="w-28 h-28 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex flex-col items-center justify-center text-white shadow-xl cursor-pointer hover:shadow-2xl transition-shadow group">
+                  <Brain className="w-10 h-10 mb-1 group-hover:scale-110 transition-transform"/>
+                  <span className="text-[10px] font-bold uppercase tracking-wider">Cerebro</span>
                 </div>
+                <div className="absolute inset-0 rounded-full border-2 border-purple-400 animate-ping opacity-30"></div>
               </div>
 
               {/* Orbiting Components */}
-              {[
-                { id: 'tools', top: '15%', left: '50%', translate: '-translate-x-1/2 -translate-y-1/2', icon: 'Wrench', label: 'HERRAMIENTAS', color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-100' },
-                { id: 'memory', top: '70%', left: '20%', translate: '-translate-x-1/2 -translate-y-1/2', icon: 'Database', label: 'MEMORIA', color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-100' },
-                { id: 'action', top: '70%', left: '80%', translate: '-translate-x-1/2 -translate-y-1/2', icon: 'Zap', label: 'ACCIÓN', color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100' }
-              ].map((comp) => (
-                <div key="{comp.id}" classname="{`absolute" z-20="" transition-all="" duration-700="" transform="" ${visiblecomponents.includes(comp.id)="" ?="" 'opacity-100'="" :="" 'opacity-0'}`}="" style="{{" top:="" comp.top,="" left:="" comp.left,="" transform:="" comp.translate="" }}="" onclick="{()" ==""> setSelectedComponent(comp.id)}
-                >
-                  <div classname="{`w-20" h-20="" bg-white="" rounded-full="" flex="" flex-col="" items-center="" justify-center="" border-2="" ${comp.border}="" shadow-lg="" cursor-pointer="" hover:-translate-y-1="" hover:shadow-xl="" transition-all="" group`}="">
-                    <div classname="{`p-2" rounded-full="" ${comp.bg}="" mb-1="" group-hover:scale-110="" transition-transform`}="">
-                      {getIcon(comp.icon)}
+              {content.components.filter((c: any) => c.id !== 'brain').map((comp: any) => {
+                const positions: Record<string, { top: string; left: string }> = {
+                  tools: { top: '10%', left: '50%' },
+                  memory: { top: '70%', left: '15%' },
+                  action: { top: '70%', left: '85%' },
+                };
+                const pos = positions[comp.id] || { top: '50%', left: '50%' };
+                return (
+                  <div key={comp.id}
+                    className={`absolute z-10 transition-all duration-700 transform cursor-pointer group ${visibleComponents.includes(comp.id) ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}
+                    style={{ top: pos.top, left: pos.left, transform: 'translate(-50%, -50%)' }}
+                    onClick={() => setSelectedComponent(comp.id)}
+                  >
+                    <div className="flex flex-col items-center">
+                      <div className={`p-2 rounded-full ${comp.color} mb-1 group-hover:scale-110 transition-transform`}>
+                        {getIcon(comp.icon)}
+                      </div>
+                      <span className="text-[10px] font-bold text-slate-600">{comp.name}</span>
                     </div>
-                    <span classname="text-[10px] font-bold text-slate-600">{comp.label}</span>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Detail Modal/Overlay */}
             {selectedComponent && (
-              <div classname="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 p-6 rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.1)] animate-slide-up z-30">
-                <div classname="flex justify-between items-start mb-2">
-                  <h4 classname="text-lg font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+              <div className="absolute bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 p-6 rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.1)] animate-slide-up z-30">
+                <div className="flex justify-between items-start mb-2">
+                  <h4 className="text-lg font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
                     {getIcon(content.components.find((c: any) => c.id === selectedComponent)?.icon)}
                     {content.components.find((c: any) => c.id === selectedComponent)?.name}
                   </h4>
-                  <button onclick="{()" ==""> setSelectedComponent(null)} className="p-1 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
-                    <span classname="sr-only">Cerrar</span>
+                  <button onClick={() => setSelectedComponent(null)} className="p-1 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
+                    <span className="sr-only">Cerrar</span>
                     ✕
                   </button>
                 </div>
-                <p classname="text-slate-600 text-sm mb-4 leading-relaxed">
+                <p className="text-slate-600 text-sm mb-4 leading-relaxed">
                   {content.components.find((c: any) => c.id === selectedComponent)?.desc}
                 </p>
-                <div classname="bg-slate-50 rounded-xl p-4 text-xs text-slate-600 border border-slate-200 shadow-inner">
-                  <strong classname="block mb-1 text-slate-800 uppercase text-[10px] tracking-wider">Ejemplos Reales:</strong>
+                <div className="bg-slate-50 rounded-xl p-4 text-xs text-slate-600 border border-slate-200 shadow-inner">
+                  <strong className="block mb-1 text-slate-800 uppercase text-[10px] tracking-wider">Ejemplos Reales:</strong>
                   {selectedComponent === 'brain' && " GPT-4, Claude 3.5 Sonnet, Gemini 1.5 Pro."}
                   {selectedComponent === 'tools' && " Gmail API, Google Calendar, Slack Webhooks, Salesforce CRM."}
                   {selectedComponent === 'memory' && " Bases de datos vectoriales (Pinecone), Historial de chat (Redis)."}
@@ -577,54 +581,54 @@ const AIAgentsSlide = ({ content }: { content: any }) => {
 
         {/* COMPARISON TAB */}
         {activeTab === 'comparison' && (
-          <div classname="flex flex-col md:flex-row gap-6 h-full items-center justify-center p-2">
+          <div className="flex flex-col md:flex-row gap-6 h-full items-center justify-center p-2">
             {/* Chatbot Side */}
-            <div classname="flex-1 w-full max-w-sm flex flex-col items-center justify-center p-6 bg-slate-50 rounded-2xl border border-slate-200 h-72 relative overflow-hidden group hover:border-slate-300 transition-colors">
-              <h4 classname="font-bold text-slate-400 uppercase tracking-widest mb-6 absolute top-6">Chatbot (Lineal)</h4>
+            <div className="flex-1 w-full max-w-sm flex flex-col items-center justify-center p-6 bg-slate-50 rounded-2xl border border-slate-200 h-72 relative overflow-hidden group hover:border-slate-300 transition-colors">
+              <h4 className="font-bold text-slate-400 uppercase tracking-widest mb-6 absolute top-6">Chatbot (Lineal)</h4>
               
-              <div classname="relative flex flex-col items-center gap-6 w-full max-w-[120px] z-10">
-                <div classname="w-full bg-white p-2 rounded-lg shadow-sm border border-slate-200 text-center text-xs font-bold text-slate-600 z-10">Input</div>
-                <div classname="w-full bg-purple-100 text-purple-700 p-2 rounded-lg shadow-sm border border-purple-200 text-center font-bold z-10">LLM</div>
-                <div classname="w-full bg-white p-2 rounded-lg shadow-sm border border-slate-200 text-center text-xs font-bold text-slate-600 z-10">Output</div>
+              <div className="relative flex flex-col items-center gap-6 w-full max-w-[120px] z-10">
+                <div className="w-full bg-white p-2 rounded-lg shadow-sm border border-slate-200 text-center text-xs font-bold text-slate-600 z-10">Input</div>
+                <div className="w-full bg-purple-100 text-purple-700 p-2 rounded-lg shadow-sm border border-purple-200 text-center font-bold z-10">LLM</div>
+                <div className="w-full bg-white p-2 rounded-lg shadow-sm border border-slate-200 text-center text-xs font-bold text-slate-600 z-10">Output</div>
                 
                 {/* Connecting Line */}
-                <div classname="absolute top-0 bottom-0 w-0.5 bg-slate-200 -z-10"></div>
+                <div className="absolute top-0 bottom-0 w-0.5 bg-slate-200 -z-10"></div>
                 
                 {/* Moving Particle */}
-                <div classname="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 bg-purple-500 rounded-full shadow-lg z-20 animate-flow-down"></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 bg-purple-500 rounded-full shadow-lg z-20 animate-flow-down"></div>
               </div>
             </div>
 
             {/* Agent Side */}
-            <div classname="flex-1 w-full max-w-sm flex flex-col items-center justify-center p-6 bg-indigo-50 rounded-2xl border border-indigo-100 h-72 relative overflow-hidden">
-              <div classname="absolute top-0 right-0 bg-indigo-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl shadow-sm z-20">NUEVO ESTÁNDAR</div>
-              <h4 classname="font-bold text-indigo-600 uppercase tracking-widest mb-6 absolute top-6">Agente (Cíclico)</h4>
+            <div className="flex-1 w-full max-w-sm flex flex-col items-center justify-center p-6 bg-indigo-50 rounded-2xl border border-indigo-100 h-72 relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-indigo-500 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl shadow-sm z-20">NUEVO ESTÁNDAR</div>
+              <h4 className="font-bold text-indigo-600 uppercase tracking-widest mb-6 absolute top-6">Agente (Cíclico)</h4>
               
-              <div classname="relative w-56 h-56 flex items-center justify-center mt-6">
+              <div className="relative w-56 h-56 flex items-center justify-center mt-6">
                 {/* Cyclic Path */}
-                <svg classname="absolute inset-0 w-full h-full animate-spin-slow-reverse">
-                  <circle cx="50%" cy="50%" r="70" fill="none" stroke="#a5b4fc" strokewidth="2" strokedasharray="6 6"/>
+                <svg className="absolute inset-0 w-full h-full animate-spin-slow-reverse">
+                  <circle cx="50%" cy="50%" r="70" fill="none" stroke="#a5b4fc" strokeWidth="2" strokeDasharray="6 6"/>
                 </svg>
 
                 {/* Orbiting Particles */}
-                <div classname="absolute inset-0 animate-spin-slow">
-                  <div classname="absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2">
-                    <div classname="absolute top-[15%] left-1/2 -translate-x-1/2 w-3 h-3 bg-blue-500 rounded-full shadow-lg shadow-blue-500/30"></div>
-                    <div classname="absolute bottom-[15%] left-1/2 -translate-x-1/2 w-3 h-3 bg-emerald-500 rounded-full shadow-lg shadow-emerald-500/30"></div>
+                <div className="absolute inset-0 animate-spin-slow">
+                  <div className="absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2">
+                    <div className="absolute top-[15%] left-1/2 -translate-x-1/2 w-3 h-3 bg-blue-500 rounded-full shadow-lg shadow-blue-500/30"></div>
+                    <div className="absolute bottom-[15%] left-1/2 -translate-x-1/2 w-3 h-3 bg-emerald-500 rounded-full shadow-lg shadow-emerald-500/30"></div>
                   </div>
                 </div>
 
                 {/* Central Brain */}
-                <div classname="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-xl border-4 border-indigo-100 z-10 relative">
-                  <bot classname="w-8 h-8 text-indigo-600"/>
-                  <div classname="absolute -bottom-5 text-[9px] font-bold text-indigo-400 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-indigo-100">Cerebro</div>
+                <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-xl border-4 border-indigo-100 z-10 relative">
+                  <Bot className="w-8 h-8 text-indigo-600"/>
+                  <div className="absolute -bottom-5 text-[9px] font-bold text-indigo-400 uppercase tracking-wider bg-white px-2 py-0.5 rounded-full border border-indigo-100">Cerebro</div>
                 </div>
 
                 {/* Labels */}
-                <div classname="absolute top-4 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur px-2 py-0.5 rounded text-[9px] font-bold text-slate-500 border border-slate-100">Planificar</div>
-                <div classname="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur px-2 py-0.5 rounded text-[9px] font-bold text-slate-500 border border-slate-100">Ejecutar</div>
-                <div classname="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur px-2 py-0.5 rounded text-[9px] font-bold text-slate-500 border border-slate-100">Herramientas</div>
-                <div classname="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur px-2 py-0.5 rounded text-[9px] font-bold text-slate-500 border border-slate-100">Memoria</div>
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur px-2 py-0.5 rounded text-[9px] font-bold text-slate-500 border border-slate-100">Planificar</div>
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur px-2 py-0.5 rounded text-[9px] font-bold text-slate-500 border border-slate-100">Ejecutar</div>
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur px-2 py-0.5 rounded text-[9px] font-bold text-slate-500 border border-slate-100">Herramientas</div>
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur px-2 py-0.5 rounded text-[9px] font-bold text-slate-500 border border-slate-100">Memoria</div>
               </div>
             </div>
           </div>
@@ -632,41 +636,41 @@ const AIAgentsSlide = ({ content }: { content: any }) => {
 
         {/* EXERCISE TAB */}
         {activeTab === 'exercise' && (
-          <div classname="h-full flex flex-col">
-            <div classname="text-center mb-6">
-              <h3 classname="text-xl font-bold text-slate-800">Conecta los puntos</h3>
-              <p classname="text-slate-500 text-sm">Empareja cada componente con su función correcta.</p>
+          <div className="h-full flex flex-col">
+            <div className="text-center mb-6">
+              <h3 className="text-xl font-bold text-slate-800">Conecta los puntos</h3>
+              <p className="text-slate-500 text-sm">Empareja cada componente con su función correcta.</p>
             </div>
 
-            <div classname="grid grid-cols-2 gap-8 flex-grow">
+            <div className="grid grid-cols-2 gap-8 flex-grow">
               {/* Components Column */}
-              <div classname="space-y-4">
+              <div className="space-y-4">
                 {content.components.map((comp: any) => (
-                  <div key="{comp.id}" onclick="{()" ==""> handleMatchClick(comp.id, 'component')}
+                  <div key={comp.id} onClick={() => handleMatchClick(comp.id, 'component')}
                     className={`p-4 rounded-xl border-2 cursor-pointer transition-all flex items-center gap-3 ${
                       matches[comp.id] ? 'bg-emerald-50 border-emerald-200 opacity-50' :
                       selectedMatchId === comp.id ? 'bg-indigo-50 border-indigo-500 shadow-md' : 
                       'bg-white border-slate-200 hover:border-indigo-200'
                     }`}
                   >
-                    <div classname="{`w-8" h-8="" rounded-full="" flex="" items-center="" justify-center="" ${comp.color}="" bg-opacity-20`}="">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${comp.color} bg-opacity-20`}>
                       {getIcon(comp.icon)}
                     </div>
-                    <span classname="font-bold text-sm text-slate-700">{comp.name}</span>
-                    {matches[comp.id] && <checkcircle classname="w-4 h-4 text-emerald-500 ml-auto"/>}
+                    <span className="font-bold text-sm text-slate-700">{comp.name}</span>
+                    {matches[comp.id] && <CheckCircle className="w-4 h-4 text-emerald-500 ml-auto"/>}
                   </div>
                 ))}
               </div>
 
               {/* Descriptions Column */}
-              <div classname="space-y-4">
+              <div className="space-y-4">
                 {[
                   { id: 'desc_brain', text: 'Razona, planifica y toma decisiones.' },
                   { id: 'desc_tools', text: 'Conecta con el mundo exterior (APIs, Webs).' },
                   { id: 'desc_memory', text: 'Mantiene el contexto de conversaciones pasadas.' },
                   { id: 'desc_action', text: 'Ejecuta tareas reales como pagos o envíos.' }
                 ].map((desc) => (
-                  <div key="{desc.id}" onclick="{()" ==""> handleMatchClick(desc.id, 'description')}
+                  <div key={desc.id} onClick={() => handleMatchClick(desc.id, 'description')}
                     className={`p-4 rounded-xl border-2 cursor-pointer transition-all text-sm flex items-center ${
                       Object.values(matches).includes(desc.id) ? 'bg-emerald-50 border-emerald-200 opacity-50' :
                       'bg-white border-slate-200 hover:border-indigo-200'
@@ -679,8 +683,8 @@ const AIAgentsSlide = ({ content }: { content: any }) => {
             </div>
 
             {isExerciseComplete && (
-              <div classname="mt-4 p-4 bg-emerald-100 text-emerald-800 rounded-xl flex items-center justify-center gap-2 animate-bounce">
-                <sparkles classname="w-5 h-5"/>
+              <div className="mt-4 p-4 bg-emerald-100 text-emerald-800 rounded-xl flex items-center justify-center gap-2 animate-bounce">
+                <Sparkles className="w-5 h-5"/>
                 <strong>¡Correcto!</strong> Has entendido la arquitectura de un agente.
               </div>
             )}
@@ -694,82 +698,82 @@ const AIAgentsSlide = ({ content }: { content: any }) => {
 
 // --- Prompt Engineering Component ---
 const PromptEngineeringSlide = ({ content }: { content: any }) => {
-  const [flippedTech, setFlippedTech] = useState<string |="" null="">(null);
+  const [flippedTech, setFlippedTech] = useState<string | null>(null);
 
   const getIcon = (name: string) => {
     switch(name) {
-      case 'Target': return <target classname="w-5 h-5"/>;
-      case 'Link': return <link classname="w-5 h-5"/>;
-      case 'ListOrdered': return <listordered classname="w-5 h-5"/>;
-      case 'Lightbulb': return <lightbulb classname="w-5 h-5"/>;
-      default: return <sparkles classname="w-5 h-5"/>;
+      case 'Target': return <Target className="w-5 h-5"/>;
+      case 'Link': return <Link className="w-5 h-5"/>;
+      case 'ListOrdered': return <ListOrdered className="w-5 h-5"/>;
+      case 'Lightbulb': return <Lightbulb className="w-5 h-5"/>;
+      default: return <Sparkles className="w-5 h-5"/>;
     }
   };
 
   return (
-    <div classname="w-full max-w-4xl bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden flex flex-col h-[36rem] md:h-[40rem] animate-fade-in-up">
-      <div classname="p-6 md:p-8 overflow-y-auto custom-scrollbar flex-grow">
+    <div className="w-full max-w-4xl bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden flex flex-col h-[36rem] md:h-[40rem] animate-fade-in-up">
+      <div className="p-6 md:p-8 overflow-y-auto custom-scrollbar flex-grow">
         
         {/* Header */}
-        <div classname="flex items-center gap-3 mb-6">
-          <div classname="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center shadow-sm">
-            <span classname="text-2xl">🗣️</span>
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center shadow-sm">
+            <span className="text-2xl">🗣️</span>
           </div>
           <div>
-             <h3 classname="text-2xl font-bold text-slate-800">Prompt Engineering</h3>
-             <p classname="text-slate-500 text-sm font-medium">El arte de programar en lenguaje natural</p>
+             <h3 className="text-2xl font-bold text-slate-800">Prompt Engineering</h3>
+             <p className="text-slate-500 text-sm font-medium">El arte de programar en lenguaje natural</p>
           </div>
         </div>
 
         {/* Summary & Fact */}
-        <div classname="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div classname="md:col-span-2 prose prose-slate text-slate-600 leading-relaxed text-sm md:text-base">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="md:col-span-2 prose prose-slate text-slate-600 leading-relaxed text-sm md:text-base">
             <p>{content.summary}</p>
           </div>
-          <div classname="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 rounded-xl p-4 flex flex-col justify-center relative overflow-hidden shadow-sm">
-             <div classname="absolute top-0 right-0 -mt-2 -mr-2 w-16 h-16 bg-emerald-200 rounded-full opacity-20 blur-xl"></div>
-             <div classname="flex items-center gap-2 mb-2 text-emerald-700 font-bold text-xs uppercase tracking-wider">
-               <trendingup classname="w-4 h-4"/> Dato Interesante
+          <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 rounded-xl p-4 flex flex-col justify-center relative overflow-hidden shadow-sm">
+             <div className="absolute top-0 right-0 -mt-2 -mr-2 w-16 h-16 bg-emerald-200 rounded-full opacity-20 blur-xl"></div>
+             <div className="flex items-center gap-2 mb-2 text-emerald-700 font-bold text-xs uppercase tracking-wider">
+               <TrendingUp className="w-4 h-4"/> Dato Interesante
              </div>
-             <p classname="text-emerald-900 font-medium text-sm leading-snug relative z-10">
+             <p className="text-emerald-900 font-medium text-sm leading-snug relative z-10">
                {content.fact}
              </p>
           </div>
         </div>
 
         {/* Techniques Grid */}
-        <h4 classname="font-bold text-slate-800 mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
-          <sparkles classname="w-4 h-4 text-pink-500"/> 4 Técnicas Avanzadas (Haz click para ver ejemplos)
+        <h4 className="font-bold text-slate-800 mb-4 flex items-center gap-2 text-sm uppercase tracking-wider">
+          <Sparkles className="w-4 h-4 text-pink-500"/> 4 Técnicas Avanzadas (Haz click para ver ejemplos)
         </h4>
         
-        <div classname="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4">
           {content.techniques.map((tech: any) => (
-            <div key="{tech.id}" classname="relative h-40 cursor-pointer perspective-1000 group" onclick="{()" ==""> setFlippedTech(flippedTech === tech.id ? null : tech.id)}
+            <div key={tech.id} className="relative h-40 cursor-pointer perspective-1000 group" onClick={() => setFlippedTech(flippedTech === tech.id ? null : tech.id)}
             >
-              <div classname="{`relative" w-full="" h-full="" duration-500="" preserve-3d="" transition-transform="" ${flippedtech="==" tech.id="" ?="" 'rotate-y-180'="" :="" ''}`}="">
+              <div className={`relative w-full h-full duration-500 preserve-3d transition-transform ${flippedTech === tech.id ? 'rotate-y-180' : ''}`}>
                 
                 {/* Front */}
-                <div classname="absolute w-full h-full backface-hidden bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-indigo-200 transition-all flex flex-col justify-between">
-                   <div classname="flex items-start gap-3">
-                      <div classname="p-2 rounded-lg bg-indigo-50 text-indigo-600">
+                <div className="absolute w-full h-full backface-hidden bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-indigo-200 transition-all flex flex-col justify-between">
+                   <div className="flex items-start gap-3">
+                      <div className="p-2 rounded-lg bg-indigo-50 text-indigo-600">
                         {getIcon(tech.icon)}
                       </div>
                       <div>
-                        <h5 classname="font-bold text-slate-800 text-sm">{tech.name}</h5>
-                        <p classname="text-xs text-slate-500 mt-1 line-clamp-3">{tech.desc}</p>
+                        <h5 className="font-bold text-slate-800 text-sm">{tech.name}</h5>
+                        <p className="text-xs text-slate-500 mt-1 line-clamp-3">{tech.desc}</p>
                       </div>
                    </div>
-                   <div classname="text-xs text-indigo-500 font-semibold flex items-center gap-1 mt-2 self-end">
-                     Ver Ejemplo <arrowright classname="w-3 h-3"/>
+                   <div className="text-xs text-indigo-500 font-semibold flex items-center gap-1 mt-2 self-end">
+                     Ver Ejemplo <ArrowRight className="w-3 h-3"/>
                    </div>
                 </div>
 
                 {/* Back */}
-                <div classname="absolute w-full h-full backface-hidden rotate-y-180 bg-indigo-600 rounded-xl p-4 shadow-lg text-white flex flex-col justify-center">
-                   <h5 classname="font-bold text-xs uppercase tracking-wider text-indigo-200 mb-2">Ejemplo:</h5>
-                   <p classname="text-sm font-medium leading-relaxed italic">"{tech.example}"</p>
-                   <div classname="mt-auto text-xs text-indigo-200 self-end flex items-center gap-1">
-                     <arrowleft classname="w-3 h-3"/> Volver
+                <div className="absolute w-full h-full backface-hidden rotate-y-180 bg-indigo-600 rounded-xl p-4 shadow-lg text-white flex flex-col justify-center">
+                   <h5 className="font-bold text-xs uppercase tracking-wider text-indigo-200 mb-2">Ejemplo:</h5>
+                   <p className="text-sm font-medium leading-relaxed italic">"{tech.example}"</p>
+                   <div className="mt-auto text-xs text-indigo-200 self-end flex items-center gap-1">
+                     <ArrowLeft className="w-3 h-3"/> Volver
                    </div>
                 </div>
 
@@ -803,49 +807,49 @@ const TokenPredictor = () => {
   };
 
   return (
-    <div classname="bg-slate-900 rounded-xl p-4 md:p-6 text-white shadow-inner border border-slate-700 w-full max-w-md mx-auto mt-4">
-      <div classname="flex items-center gap-2 mb-4 border-b border-slate-700 pb-2">
-        <cpu classname="w-4 h-4 text-pink-500"/>
-        <span classname="text-xs font-mono text-slate-400 uppercase">Motor de Predicción (LLM)</span>
+    <div className="bg-slate-900 rounded-xl p-4 md:p-6 text-white shadow-inner border border-slate-700 w-full max-w-md mx-auto mt-4">
+      <div className="flex items-center gap-2 mb-4 border-b border-slate-700 pb-2">
+        <Cpu className="w-4 h-4 text-pink-500"/>
+        <span className="text-xs font-mono text-slate-400 uppercase">Motor de Predicción (LLM)</span>
       </div>
 
-      <div classname="font-mono text-lg md:text-xl mb-6">
-        <span classname="text-slate-400">La IA es una... </span>
+      <div className="font-mono text-lg md:text-xl mb-6">
+        <span className="text-slate-400">La IA es una... </span>
         {step === 2 && (
-          <span classname="text-emerald-400 font-bold animate-fade-in bg-emerald-400/10 px-1 rounded">
+          <span className="text-emerald-400 font-bold animate-fade-in bg-emerald-400/10 px-1 rounded">
             herramienta
           </span>
         )}
-        {step === 0 && <span classname="animate-pulse text-slate-600">|</span>}
+        {step === 0 && <span className="animate-pulse text-slate-600">|</span>}
       </div>
 
       {step === 1 && (
-        <div classname="space-y-3 mb-4 animate-fade-in">
-          <p classname="text-xs text-slate-500 mb-2">Calculando probabilidades...</p>
+        <div className="space-y-3 mb-4 animate-fade-in">
+          <p className="text-xs text-slate-500 mb-2">Calculando probabilidades...</p>
           {predictions.map((p, i) => (
-            <div key="{i}" classname="space-y-1">
-              <div classname="flex justify-between text-xs">
-                <span classname="font-mono text-slate-300">"{p.word}"</span>
-                <span classname="text-slate-400">{p.prob}%</span>
+            <div key={i} className="space-y-1">
+              <div className="flex justify-between text-xs">
+                <span className="font-mono text-slate-300">"{p.word}"</span>
+                <span className="text-slate-400">{p.prob}%</span>
               </div>
-              <div classname="h-2 bg-slate-800 rounded-full overflow-hidden">
-                <div classname="h-full rounded-full transition-all duration-1000 ease-out" style="{{" width:="" `${p.prob}%`,="" backgroundcolor:="" p.color,="" animationdelay:="" `${i="" *="" 100}ms`="" }}=""></div>
+              <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                <div className="h-full rounded-full transition-all duration-1000 ease-out" style={{ width: `${p.prob}%`, backgroundColor: p.color, animationDelay: `${i * 100}ms` }}></div>
               </div>
             </div>
           ))}
         </div>
       )}
 
-      <div classname="mt-4 flex justify-end">
+      <div className="mt-4 flex justify-end">
         {step !== 1 && (
-          <button onclick="{step" =="=" 2="" ?="" handlereset="" :="" handlepredict}="" classname="{`px-4" py-2="" rounded-lg="" text-sm="" font-bold="" transition-all="" flex="" items-center="" gap-2="" ${="" step="==" 2="" ?="" 'bg-slate-700="" hover:bg-slate-600="" text-white'="" :="" 'bg-pink-600="" hover:bg-pink-500="" text-white="" shadow-lg="" hover:shadow-pink-500="" 25'="" }`}="">
+          <button onClick={step === 2 ? handleReset : handlePredict} className={`px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${ step === 2 ? 'bg-slate-700 hover:bg-slate-600 text-white' : 'bg-pink-600 hover:bg-pink-500 text-white shadow-lg hover:shadow-pink-500/25' }`}>
             {step === 2 ? 'Reiniciar' : 'Predecir Siguiente Token'}
-            {step === 0 && <sparkles classname="w-4 h-4"/>}
+            {step === 0 && <Sparkles className="w-4 h-4"/>}
           </button>
         )}
         {step === 1 && (
-           <div classname="px-4 py-2 text-sm text-slate-400 flex items-center gap-2">
-             <div classname="w-2 h-2 bg-pink-500 rounded-full animate-ping"></div>
+           <div className="px-4 py-2 text-sm text-slate-400 flex items-center gap-2">
+             <div className="w-2 h-2 bg-pink-500 rounded-full animate-ping"></div>
              Procesando...
            </div>
         )}
@@ -858,7 +862,7 @@ interface Day1Props {
   setRoute: (route: AppRoute) => void;
 }
 
-const Day1: React.FC<day1props> = ({ setRoute }) => {
+const Day1: React.FC<Day1Props> = ({ setRoute }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [showCTA, setShowCTA] = useState(false);
@@ -887,8 +891,8 @@ const Day1: React.FC<day1props> = ({ setRoute }) => {
   const progress = ((currentIndex + 1) / slides.length) * 100;
 
   return (
-    <layout title="Día 1: La Era Exponencial" onback="{()" ==""> setRoute(AppRoute.HOME)}>
-      <ctamodal isopen="{showCTA}" onclose="{()" ==""> setShowCTA(false)}
+    <Layout title="Día 1: La Era Exponencial" onBack={() => setRoute(AppRoute.HOME)}>
+      <CTAModal isOpen={showCTA} onClose={() => setShowCTA(false)}
         title="¡Has visto el futuro!"
         message="La gráfica no miente: estamos ante la mayor oportunidad de inversión y crecimiento de la historia. ¿Estás preparado para surfear esta ola?"
       />
@@ -900,71 +904,71 @@ const Day1: React.FC<day1props> = ({ setRoute }) => {
         .rotate-y-180 { transform: rotateY(180deg); }
       `}</style>
 
-      <div classname="flex flex-col items-center justify-center min-h-[70vh] space-y-6 w-full max-w-4xl mx-auto">
+      <div className="flex flex-col items-center justify-center min-h-[70vh] space-y-6 w-full max-w-4xl mx-auto">
         
         {/* Progress Bar */}
-        <div classname="w-full max-w-md bg-slate-200 rounded-full h-2 mb-4">
-          <div classname="h-2 rounded-full transition-all duration-500" style="{{" width:="" `${math.min(progress,="" 100)}%`,="" backgroundcolor:="" colors.accent="" }}=""></div>
+        <div className="w-full max-w-md bg-slate-200 rounded-full h-2 mb-4">
+          <div className="h-2 rounded-full transition-all duration-500" style={{ width: `${Math.min(progress, 100)}%`, backgroundColor: COLORS.accent }}></div>
         </div>
 
-        <div classname="text-center space-y-2 mb-4">
-           <h2 classname="text-sm md:text-base text-slate-500 font-semibold uppercase tracking-wider">
+        <div className="text-center space-y-2 mb-4">
+           <h2 className="text-sm md:text-base text-slate-500 font-semibold uppercase tracking-wider">
              Parte {currentIndex + 1} de {slides.length}
            </h2>
         </div>
 
         {/* Content Area */}
-        <div classname="w-full flex justify-center">
+        <div className="w-full flex justify-center">
           
           {currentSlide.type === 'flip' ? (
             /* FLIP CARD COMPONENT */
-            <div classname="relative w-full max-w-md h-[28rem] md:h-[32rem] cursor-pointer group perspective-1000" onclick="{()" ==""> setIsFlipped(!isFlipped)}
+            <div className="relative w-full max-w-md h-[28rem] md:h-[32rem] cursor-pointer group perspective-1000" onClick={() => setIsFlipped(!isFlipped)}
             >
-              <div classname="{`relative" w-full="" h-full="" duration-700="" preserve-3d="" transition-transform="" ${isflipped="" ?="" 'rotate-y-180'="" :="" ''}`}="">
+              <div className={`relative w-full h-full duration-700 preserve-3d transition-transform ${isFlipped ? 'rotate-y-180' : ''}`}>
                 
                 {/* Front Side */}
-                <div classname="absolute w-full h-full backface-hidden bg-white rounded-3xl shadow-xl flex flex-col items-center justify-center p-8 text-center border border-slate-100 hover:shadow-2xl transition-shadow">
-                  <div classname="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6 text-5xl shadow-inner">
+                <div className="absolute w-full h-full backface-hidden bg-white rounded-3xl shadow-xl flex flex-col items-center justify-center p-8 text-center border border-slate-100 hover:shadow-2xl transition-shadow">
+                  <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mb-6 text-5xl shadow-inner">
                     {currentSlide.icon}
                   </div>
-                  <h3 classname="text-2xl md:text-3xl font-bold mb-6 text-slate-800">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-6 text-slate-800">
                     {currentSlide.title}
                   </h3>
-                  <p classname="text-slate-500 font-medium text-lg italic">
+                  <p className="text-slate-500 font-medium text-lg italic">
                     {currentSlide.question}
                   </p>
-                  <div classname="mt-auto text-xs md:text-sm text-slate-400 font-semibold uppercase tracking-widest flex items-center gap-2 animate-pulse">
-                    <info classname="w-4 h-4"/>
+                  <div className="mt-auto text-xs md:text-sm text-slate-400 font-semibold uppercase tracking-widest flex items-center gap-2 animate-pulse">
+                    <Info className="w-4 h-4"/>
                     Haz click para descubrir
                   </div>
                 </div>
 
                 {/* Back Side */}
-                <div classname="absolute w-full h-full backface-hidden rotate-y-180 rounded-3xl shadow-xl flex flex-col p-8 text-center overflow-hidden" style="{{" backgroundcolor:="" colors.primary="" }}="">
-                  <div classname="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-white opacity-5 rounded-full blur-3xl"></div>
-                  <div classname="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-pink-500 opacity-10 rounded-full blur-3xl"></div>
+                <div className="absolute w-full h-full backface-hidden rotate-y-180 rounded-3xl shadow-xl flex flex-col p-8 text-center overflow-hidden" style={{ backgroundColor: COLORS.primary }}>
+                  <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-white opacity-5 rounded-full blur-3xl"></div>
+                  <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-pink-500 opacity-10 rounded-full blur-3xl"></div>
 
-                  <h3 classname="text-xl font-bold mb-6 text-white border-b border-white/20 pb-4 relative z-10">
+                  <h3 className="text-xl font-bold mb-6 text-white border-b border-white/20 pb-4 relative z-10">
                     {currentSlide.title}
                   </h3>
                   
-                  <div classname="text-white/90 text-base md:text-lg leading-relaxed flex-grow text-left overflow-y-auto relative z-10 pr-2 custom-scrollbar">
-                    <reactmarkdown components="{{" p:="" ({node,="" ...props})=""> <p classname="mb-4 last:mb-0" {...props}=""/>,
-                        strong: ({node, ...props}) => <strong classname="font-bold text-[#FF2878] bg-white/10 px-1 rounded" {...props}=""/>
-                      }}
-                    >
+                  <div className="text-white/90 text-base md:text-lg leading-relaxed flex-grow text-left overflow-y-auto relative z-10 pr-2 custom-scrollbar">
+                    <ReactMarkdown components={{
+                        p: ({node, ...props}) => <p className="mb-4 last:mb-0" {...props} />,
+                        strong: ({node, ...props}) => <strong className="font-bold text-[#FF2878] bg-white/10 px-1 rounded" {...props} />
+                      }}>
                       {currentSlide.answer || ""}
                     </ReactMarkdown>
                   </div>
 
-                  <div classname="mt-6 w-full relative z-10">
-                     <button onclick="{(e)" ==""> {
+                  <div className="mt-6 w-full relative z-10">
+                     <button onClick={(e) => {
                          e.stopPropagation();
                          handleNext();
                        }}
                        className="w-full bg-white text-slate-900 px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-slate-50 transition flex items-center justify-center gap-2"
                      >
-                       Siguiente <arrowright classname="w-4 h-4"/>
+                       Siguiente <ArrowRight className="w-4 h-4"/>
                      </button>
                   </div>
                 </div>
@@ -973,85 +977,85 @@ const Day1: React.FC<day1props> = ({ setRoute }) => {
             </div>
           ) : currentSlide.type === 'prompt_engineering' ? (
             /* PROMPT ENGINEERING COMPONENT */
-            <div classname="w-full max-w-4xl flex flex-col">
-              <promptengineeringslide content="{currentSlide.content}"/>
+            <div className="w-full max-w-4xl flex flex-col">
+              <PromptEngineeringSlide content={currentSlide.content}/>
               
-              <div classname="p-4 md:p-6 border-t border-slate-100 bg-slate-50 flex justify-between items-center mt-4 rounded-xl shadow-sm">
-                 <button onclick="{handlePrev}" classname="text-slate-500 hover:text-slate-800 font-semibold px-4 py-2 rounded-lg hover:bg-slate-200 transition flex items-center gap-2">
-                   <arrowleft classname="w-4 h-4"/> Anterior
+              <div className="p-4 md:p-6 border-t border-slate-100 bg-slate-50 flex justify-between items-center mt-4 rounded-xl shadow-sm">
+                 <button onClick={handlePrev} className="text-slate-500 hover:text-slate-800 font-semibold px-4 py-2 rounded-lg hover:bg-slate-200 transition flex items-center gap-2">
+                   <ArrowLeft className="w-4 h-4"/> Anterior
                  </button>
                  
-                 <button onclick="{handleNext}" classname="bg-[#FF2878] text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl hover:brightness-110 transition transform hover:scale-105 flex items-center gap-2">
-                   Siguiente <arrowright classname="w-4 h-4"/>
+                 <button onClick={handleNext} className="bg-[#FF2878] text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl hover:brightness-110 transition transform hover:scale-105 flex items-center gap-2">
+                   Siguiente <ArrowRight className="w-4 h-4"/>
                  </button>
               </div>
             </div>
           ) : currentSlide.type === 'ai_agents' ? (
             /* AI AGENTS COMPONENT */
-            <div classname="w-full max-w-4xl flex flex-col">
-              <aiagentsslide content="{currentSlide.content}"/>
+            <div className="w-full max-w-4xl flex flex-col">
+              <AIAgentsSlide content={currentSlide.content}/>
               
-              <div classname="p-4 md:p-6 border-t border-slate-100 bg-slate-50 flex justify-between items-center mt-4 rounded-xl shadow-sm">
-                 <button onclick="{handlePrev}" classname="text-slate-500 hover:text-slate-800 font-semibold px-4 py-2 rounded-lg hover:bg-slate-200 transition flex items-center gap-2">
-                   <arrowleft classname="w-4 h-4"/> Anterior
+              <div className="p-4 md:p-6 border-t border-slate-100 bg-slate-50 flex justify-between items-center mt-4 rounded-xl shadow-sm">
+                 <button onClick={handlePrev} className="text-slate-500 hover:text-slate-800 font-semibold px-4 py-2 rounded-lg hover:bg-slate-200 transition flex items-center gap-2">
+                   <ArrowLeft className="w-4 h-4"/> Anterior
                  </button>
                  
-                 <button onclick="{handleNext}" classname="bg-[#FF2878] text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl hover:brightness-110 transition transform hover:scale-105 flex items-center gap-2">
-                   Siguiente <arrowright classname="w-4 h-4"/>
+                 <button onClick={handleNext} className="bg-[#FF2878] text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl hover:brightness-110 transition transform hover:scale-105 flex items-center gap-2">
+                   Siguiente <ArrowRight className="w-4 h-4"/>
                  </button>
               </div>
             </div>
           ) : currentSlide.type === 'agent_examples' ? (
             /* AGENT EXAMPLES COMPONENT */
-            <div classname="w-full max-w-4xl flex flex-col">
-              <agentexamplesslide content="{currentSlide.content}"/>
+            <div className="w-full max-w-4xl flex flex-col">
+              <AgentExamplesSlide content={currentSlide.content}/>
               
-              <div classname="p-4 md:p-6 border-t border-slate-100 bg-slate-50 flex justify-between items-center mt-4 rounded-xl shadow-sm">
-                 <button onclick="{handlePrev}" classname="text-slate-500 hover:text-slate-800 font-semibold px-4 py-2 rounded-lg hover:bg-slate-200 transition flex items-center gap-2">
-                   <arrowleft classname="w-4 h-4"/> Anterior
+              <div className="p-4 md:p-6 border-t border-slate-100 bg-slate-50 flex justify-between items-center mt-4 rounded-xl shadow-sm">
+                 <button onClick={handlePrev} className="text-slate-500 hover:text-slate-800 font-semibold px-4 py-2 rounded-lg hover:bg-slate-200 transition flex items-center gap-2">
+                   <ArrowLeft className="w-4 h-4"/> Anterior
                  </button>
                  
-                 <button onclick="{handleFinish}" classname="bg-[#FF2878] text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl hover:brightness-110 transition transform hover:scale-105 flex items-center gap-2">
-                   Finalizar <checkcircle classname="w-4 h-4"/>
+                 <button onClick={handleFinish} className="bg-[#FF2878] text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl hover:brightness-110 transition transform hover:scale-105 flex items-center gap-2">
+                   Finalizar <CheckCircle className="w-4 h-4"/>
                  </button>
               </div>
             </div>
           ) : currentSlide.type === 'interactive_text' ? (
             /* INTERACTIVE TEXT COMPONENT */
-            <div classname="w-full max-w-4xl bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden flex flex-col animate-fade-in-up">
-              <div classname="p-6 md:p-8 flex flex-col md:flex-row gap-8 items-start">
+            <div className="w-full max-w-4xl bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden flex flex-col animate-fade-in-up">
+              <div className="p-6 md:p-8 flex flex-col md:flex-row gap-8 items-start">
                 
                 {/* Text Content */}
-                <div classname="flex-1">
-                  <div classname="flex items-center gap-3 mb-4">
-                    <div classname="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center">
-                      <brain classname="w-6 h-6"/>
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center">
+                      <Brain className="w-6 h-6"/>
                     </div>
-                    <h3 classname="text-2xl font-bold text-slate-800">{currentSlide.title}</h3>
+                    <h3 className="text-2xl font-bold text-slate-800">{currentSlide.title}</h3>
                   </div>
 
-                  <div classname="prose prose-slate text-slate-600 leading-relaxed">
-                    <reactmarkdown components="{{" strong:="" ({node,="" ...props})=""> <strong classname="font-bold text-[#243F4C] bg-blue-50 px-1 rounded" {...props}=""/>
-                      }}
-                    >
+                  <div className="prose prose-slate text-slate-600 leading-relaxed">
+                    <ReactMarkdown components={{
+                        strong: ({node, ...props}) => <strong className="font-bold text-[#243F4C] bg-blue-50 px-1 rounded" {...props} />
+                      }}>
                       {currentSlide.content || ""}
                     </ReactMarkdown>
                   </div>
 
-                  <div classname="mt-6 flex gap-2">
-                    <div classname="px-3 py-1 bg-slate-100 rounded-full text-xs font-bold text-slate-500">ChatGPT</div>
-                    <div classname="px-3 py-1 bg-slate-100 rounded-full text-xs font-bold text-slate-500">Claude</div>
-                    <div classname="px-3 py-1 bg-slate-100 rounded-full text-xs font-bold text-slate-500">Gemini</div>
-                    <div classname="px-3 py-1 bg-slate-100 rounded-full text-xs font-bold text-slate-500">Grok</div>
+                  <div className="mt-6 flex gap-2">
+                    <div className="px-3 py-1 bg-slate-100 rounded-full text-xs font-bold text-slate-500">ChatGPT</div>
+                    <div className="px-3 py-1 bg-slate-100 rounded-full text-xs font-bold text-slate-500">Claude</div>
+                    <div className="px-3 py-1 bg-slate-100 rounded-full text-xs font-bold text-slate-500">Gemini</div>
+                    <div className="px-3 py-1 bg-slate-100 rounded-full text-xs font-bold text-slate-500">Grok</div>
                   </div>
                 </div>
 
                 {/* Interactive Widget */}
-                <div classname="w-full md:w-1/2 bg-slate-50 rounded-2xl p-4 border border-slate-100">
-                  {currentSlide.interactiveElement === 'token_predictor' && <tokenpredictor/>}
+                <div className="w-full md:w-1/2 bg-slate-50 rounded-2xl p-4 border border-slate-100">
+                  {currentSlide.interactiveElement === 'token_predictor' && <TokenPredictor/>}
                   
-                  <div classname="mt-4 flex items-start gap-2 text-xs text-amber-700 bg-amber-50 p-3 rounded-lg border border-amber-100">
-                    <alerttriangle classname="w-4 h-4 flex-shrink-0 mt-0.5"/>
+                  <div className="mt-4 flex items-start gap-2 text-xs text-amber-700 bg-amber-50 p-3 rounded-lg border border-amber-100">
+                    <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5"/>
                     <p>
                       <strong>Riesgo:</strong> Al ser una "caja negra", puede inventar datos (alucinaciones) si no le das el contexto adecuado.
                     </p>
@@ -1060,67 +1064,67 @@ const Day1: React.FC<day1props> = ({ setRoute }) => {
 
               </div>
 
-              <div classname="p-4 md:p-6 border-t border-slate-100 bg-slate-50 flex justify-between items-center mt-auto">
-                 <button onclick="{handlePrev}" classname="text-slate-500 hover:text-slate-800 font-semibold px-4 py-2 rounded-lg hover:bg-slate-200 transition flex items-center gap-2">
-                   <arrowleft classname="w-4 h-4"/> Anterior
+              <div className="p-4 md:p-6 border-t border-slate-100 bg-slate-50 flex justify-between items-center mt-auto">
+                 <button onClick={handlePrev} className="text-slate-500 hover:text-slate-800 font-semibold px-4 py-2 rounded-lg hover:bg-slate-200 transition flex items-center gap-2">
+                   <ArrowLeft className="w-4 h-4"/> Anterior
                  </button>
                  
-                 <button onclick="{handleNext}" classname="bg-[#FF2878] text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl hover:brightness-110 transition transform hover:scale-105 flex items-center gap-2">
-                   Siguiente <arrowright classname="w-4 h-4"/>
+                 <button onClick={handleNext} className="bg-[#FF2878] text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl hover:brightness-110 transition transform hover:scale-105 flex items-center gap-2">
+                   Siguiente <ArrowRight className="w-4 h-4"/>
                  </button>
               </div>
             </div>
           ) : (
             /* CHART COMPONENT */
-            <div classname="w-full max-w-4xl bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden flex flex-col h-[32rem] md:h-[36rem] animate-fade-in-up">
-              <div classname="p-6 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+            <div className="w-full max-w-4xl bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden flex flex-col h-[32rem] md:h-[36rem] animate-fade-in-up">
+              <div className="p-6 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
                 <div>
-                  <h3 classname="text-xl md:text-2xl font-bold text-slate-800 flex items-center gap-2">
+                  <h3 className="text-xl md:text-2xl font-bold text-slate-800 flex items-center gap-2">
                     {currentSlide.icon} {currentSlide.title}
                   </h3>
-                  <p classname="text-slate-500 text-sm md:text-base mt-1">
+                  <p className="text-slate-500 text-sm md:text-base mt-1">
                     {currentSlide.description}
                   </p>
                 </div>
-                <div classname="hidden md:block text-xs font-mono bg-slate-200 px-2 py-1 rounded text-slate-600">
+                <div className="hidden md:block text-xs font-mono bg-slate-200 px-2 py-1 rounded text-slate-600">
                   Source: ARK Investment Management LLC, 2024
                 </div>
               </div>
 
-              <div classname="flex-grow p-2 md:p-6 relative">
-                <responsivecontainer width="100%" height="100%">
-                  <linechart data="{chartData}" margin="{{" top:="" 20,="" right:="" 30,="" left:="" 0,="" bottom:="" 0="" }}="">
-                    <cartesiangrid strokedasharray="3 3" vertical="{false}" stroke="#e2e8f0"/>
-                    <xaxis datakey="year" tick="{{fill:" '#64748b',="" fontsize:="" 12}}="" axisline="{false}" tickline="{false}" mintickgap="{30}"/>
-                    <yaxis tick="{{fill:" '#64748b',="" fontsize:="" 12}}="" axisline="{false}" tickline="{false}" tickformatter="{(value)" ==""> `${value}%`}
+              <div className="flex-grow p-2 md:p-6 relative">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0"/>
+                    <XAxis dataKey="year" tick={{fill: '#64748b', fontSize: 12}} axisLine={false} tickLine={false} minTickGap={30}/>
+                    <YAxis tick={{fill: '#64748b', fontSize: 12}} axisLine={false} tickLine={false} tickFormatter={(value) => `${value}%`}
                       domain={[0, 9]}
                     />
-                    <tooltip contentstyle="{{" borderradius:="" '12px',="" border:="" 'none',="" boxshadow:="" '0="" 10px="" 15px="" -3px="" rgba(0,="" 0,="" 0,="" 0.1)'="" }}="" itemstyle="{{" fontsize:="" '12px',="" padding:="" 0="" }}="" labelstyle="{{" fontweight:="" 'bold',="" color:="" '#1e293b',="" marginbottom:="" '8px'="" }}=""/>
-                    <legend wrapperstyle="{{" paddingtop:="" '20px'="" }}=""/>
+                    <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }} itemStyle={{ fontSize: '12px', padding: 0 }} labelStyle={{ fontWeight: 'bold', color: '#1e293b', marginBottom: '8px' }}/>
+                    <Legend wrapperStyle={{ paddingTop: '20px' }}/>
                     
                     {/* Historical Waves */}
-                    <line type="monotone" datakey="Railroad" stroke="#64748b" strokewidth="{2}" dot="{false}" activedot="{{" r:="" 6="" }}="" opacity="{0.5}"/>
-                    <line type="monotone" datakey="Cars" stroke="#ef4444" strokewidth="{2}" dot="{false}" activedot="{{" r:="" 6="" }}="" opacity="{0.6}"/>
-                    <line type="monotone" datakey="Computers" stroke="#eab308" strokewidth="{2}" dot="{false}" activedot="{{" r:="" 6="" }}="" opacity="{0.7}"/>
+                    <Line type="monotone" dataKey="Railroad" stroke="#64748b" strokeWidth={2} dot={false} activeDot={{ r: 6 }} opacity={0.5}/>
+                    <Line type="monotone" dataKey="Cars" stroke="#ef4444" strokeWidth={2} dot={false} activeDot={{ r: 6 }} opacity={0.6}/>
+                    <Line type="monotone" dataKey="Computers" stroke="#eab308" strokeWidth={2} dot={false} activeDot={{ r: 6 }} opacity={0.7}/>
                     
                     {/* The Big Wave */}
-                    <line type="monotone" datakey="AI" name="AI Software" stroke="#6366f1" strokewidth="{4}" dot="{false}" activedot="{{" r:="" 8,="" strokewidth:="" 0="" }}="" animationduration="{2000}"/>
+                    <Line type="monotone" dataKey="AI" name="AI Software" stroke="#6366f1" strokeWidth={4} dot={false} activeDot={{ r: 8, strokeWidth: 0 }} animationDuration={2000}/>
                   </LineChart>
                 </ResponsiveContainer>
                 
                 {/* Annotation Overlay */}
-                <div classname="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-0 animate-fade-in delay-1000">
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-0 animate-fade-in delay-1000">
                   {/* Optional: Add floating labels if needed, but Legend handles it well */}
                 </div>
               </div>
 
-              <div classname="p-4 md:p-6 border-t border-slate-100 bg-slate-50 flex justify-between items-center">
-                 <button onclick="{handlePrev}" classname="text-slate-500 hover:text-slate-800 font-semibold px-4 py-2 rounded-lg hover:bg-slate-200 transition flex items-center gap-2">
-                   <arrowleft classname="w-4 h-4"/> Anterior
+              <div className="p-4 md:p-6 border-t border-slate-100 bg-slate-50 flex justify-between items-center">
+                 <button onClick={handlePrev} className="text-slate-500 hover:text-slate-800 font-semibold px-4 py-2 rounded-lg hover:bg-slate-200 transition flex items-center gap-2">
+                   <ArrowLeft className="w-4 h-4"/> Anterior
                  </button>
                  
-                 <button onclick="{handleNext}" classname="bg-[#FF2878] text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl hover:brightness-110 transition transform hover:scale-105 flex items-center gap-2">
-                   Siguiente <arrowright classname="w-4 h-4"/>
+                 <button onClick={handleNext} className="bg-[#FF2878] text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl hover:brightness-110 transition transform hover:scale-105 flex items-center gap-2">
+                   Siguiente <ArrowRight className="w-4 h-4"/>
                  </button>
               </div>
             </div>
@@ -1130,11 +1134,11 @@ const Day1: React.FC<day1props> = ({ setRoute }) => {
 
         {/* Navigation Controls (Only for Flip Card state to go back) */}
         {currentSlide.type === 'flip' && (
-          <div classname="flex justify-between w-full max-w-md px-4">
-            <button onclick="{handlePrev}" disabled="{currentIndex" =="=" 0}="" classname="text-slate-400 hover:text-slate-600 font-semibold disabled:opacity-0 transition px-2 py-1 flex items-center gap-1">
-              <arrowleft classname="w-4 h-4"/> Anterior
+          <div className="flex justify-between w-full max-w-md px-4">
+            <button onClick={handlePrev} disabled={currentIndex === 0} className="text-slate-400 hover:text-slate-600 font-semibold disabled:opacity-0 transition px-2 py-1 flex items-center gap-1">
+              <ArrowLeft className="w-4 h-4"/> Anterior
             </button>
-            <div classname="w-8"></div> {/* Spacer */}
+            <div className="w-8"></div> {/* Spacer */}
           </div>
         )}
 
