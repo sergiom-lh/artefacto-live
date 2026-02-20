@@ -49,7 +49,7 @@ export const openKeySelection = async () => {
 export const enhancePrompt = async (originalPrompt: string): Promise<string> => {
   const ai = getEnvClient();
   const response = await ai.models.generateContent({
-    model: 'gemini-3-flash-preview',
+    model: 'gemini-2.0-flash',
     contents: `Mejora el siguiente prompt para un generador de imágenes o video de IA. Hazlo más descriptivo, visual y detallado, pero mantén la idea original. Devuelve SOLO el prompt mejorado en español: "${originalPrompt}"`,
   });
   return response.text || originalPrompt;
@@ -112,7 +112,7 @@ export const generateVideo = async (prompt: string): Promise<string> => {
 export const sendConsultantMessage = async (history: {role: string, parts: {text: string}[]}[], newMessage: string) => {
   const ai = getEnvClient();
   const chat = ai.chats.create({
-    model: 'gemini-3-flash-preview',
+    model: 'gemini-2.0-flash',
     config: {
       systemInstruction: `Actúa como un Consultor de Carrera experto de "IA Heroes". 
       Tu objetivo es persuadir sutilmente y educar al usuario sobre por qué el programa "IA Heroes Pro" es vital para su futuro.
@@ -139,7 +139,7 @@ export const analyzeBusiness = async (url: string) => {
   const ai = getEnvClient();
   
   const response = await ai.models.generateContent({
-    model: 'gemini-3-flash-preview',
+    model: 'gemini-2.0-flash',
     contents: `Analiza este negocio: ${url}. Si es una URL válida, busca información sobre ella. Si no, analiza la descripción. Luego, sigue las instrucciones del sistema.`,
     config: {
       systemInstruction: AGENT_ANALYSIS_SYSTEM_PROMPT,

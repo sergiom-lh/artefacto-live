@@ -45,6 +45,7 @@ const Day2: React.FC<Day2Props> = ({ setRoute }) => {
   const [isEnhancing, setIsEnhancing] = useState(false);
   const [isOptimized, setIsOptimized] = useState(false);
   const [showCTA, setShowCTA] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Agent template fields
   const [agentRol, setAgentRol] = useState('');
@@ -55,13 +56,15 @@ const Day2: React.FC<Day2Props> = ({ setRoute }) => {
   const handleEnhance = async () => {
     if (!prompt.trim()) return;
     setIsEnhancing(true);
+    setError(null);
     try {
       const betterPrompt = await enhancePrompt(prompt);
       setPrompt(betterPrompt);
       setIsOptimized(true);
       setTimeout(() => setShowCTA(true), 1500);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      setError(err?.message || "Error al mejorar el prompt. Revisa tu API key y conexión.");
     } finally {
       setIsEnhancing(false);
     }
@@ -71,12 +74,14 @@ const Day2: React.FC<Day2Props> = ({ setRoute }) => {
     if (!agentRol.trim() && !agentContexto.trim() && !agentInstruccion.trim()) return;
     const combined = `ROL: ${agentRol}\nCONTEXTO: ${agentContexto}\nINSTRUCCIÓN: ${agentInstruccion}`;
     setIsEnhancing(true);
+    setError(null);
     try {
       const betterPrompt = await enhancePrompt(combined);
       setAgentResult(betterPrompt);
       setTimeout(() => setShowCTA(true), 1500);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      setError(err?.message || "Error al generar el system prompt. Revisa tu API key y conexión.");
     } finally {
       setIsEnhancing(false);
     }
@@ -208,6 +213,7 @@ const Day2: React.FC<Day2Props> = ({ setRoute }) => {
                 </button>
                 {isOptimized && <CopyButton text={prompt} />}
               </div>
+              {error && <p className="text-red-500 text-center text-sm font-medium mt-2">{error}</p>}
             </div>
           </div>
         )}
@@ -298,6 +304,7 @@ const Day2: React.FC<Day2Props> = ({ setRoute }) => {
                   '✨ Generar System Prompt con IA'
                 )}
               </button>
+              {error && <p className="text-red-500 text-center text-sm font-medium mt-2">{error}</p>}
             </div>
 
             {/* Agent Result */}
